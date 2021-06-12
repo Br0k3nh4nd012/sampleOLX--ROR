@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  category: MyString
+  description: MyText
+  price: 1
+  buyerId: 1
+  soldOut: false
+  user: one
+
+two:
+  name: MyString
+  category: MyString
+  description: MyText
+  price: 1
+  buyerId: 1
+  soldOut: false
+  user: two

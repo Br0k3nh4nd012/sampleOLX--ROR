@@ -1,0 +1,75 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ body{
+     margin: 0% 0%;
+     background-color: rgb(134, 233, 233);
+ }
+ .input_box{
+     width: 30%;
+    height: 35px;
+    border-radius: 20px;
+    outline: none;
+
+ }
+
+ .navbarMine{
+     background-color: azure;
+     justify-content: space-between;
+     display: flex;
+     justify-items: center;
+ }
+ .signOutText{
+    padding: 20px;
+    font-size: 16px;
+ }
+ .showProduct{
+     background-color: azure;
+     padding: 23px;
+     margin-top: 5px;
+ }
+ .payMethod{
+     width: 30%;
+ }
+ .btnw{
+     width: 80px;
+ }
+.btnwhite{
+    color: white;
+}
+.btn-success{
+    color: white;
+}
+.destroybtn{
+    background-color: rgb(230, 116, 116);
+    color: azure;
+    padding: 9px 12px;
+    border-radius: 5px;
+}
+.editbtn{
+    background-color: rgb(147, 224, 140);
+    color: azure;
+    padding: 9px 12px;
+    border-radius: 5px;
+}
+.detailsbtn{
+    background-color: rgb(90, 174, 230);
+    color: azure;
+    padding: 9px 12px;
+    border-radius: 5px;
+}
+.btnwhite{
+    color: white;
+}

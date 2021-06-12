@@ -1,0 +1,33 @@
+<%= link_to 'Back', products_path %>
+
+<div class="showProduct"> 
+<p style="font-size:20px">
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p style="font-size:20px">
+  <strong>Category:</strong>
+  <%= @product.category %>
+</p>
+
+<p style="font-size:20px">
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+
+<p style="font-size:20px">
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<p style="font-size:20px">
+  <strong>User:</strong>
+  <%= @product.user_id %>
+</p>
+</div>
+<div style="margin-top:20px">
+<%= link_to 'Buy Now', do_payment_path(@product) , class:"btn btn-success btnwhite" %> <br>
+</div>
+
+

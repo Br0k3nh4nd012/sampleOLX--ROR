@@ -1,0 +1,23 @@
+<%= link_to 'Back', product_path(session[:prod_id]) %>
+
+<h2>Payment </h2>
+<div style="margin-top:20px">
+      <p style="font-size:20px">
+      <strong>Price: </strong>
+      <%= @price %>
+      </p>
+</div>
+
+<%= form_with url: "/products/payment" ,model: @payment do |form| %>
+
+    
+    <div class="field" style="width:500px">
+    <%= form.select :paymentMethod, ['credit card', 'debit card','net banking','upi'] %>
+    </div>
+    
+    
+    
+    <div class="actions" style="margin-top:40px">
+    <%= form.submit "pay" , class:"btn btn-success btnw btnwhite"%>
+  </div>
+  <% end %>

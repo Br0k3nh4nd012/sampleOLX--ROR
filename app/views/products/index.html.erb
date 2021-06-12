@@ -1,0 +1,31 @@
+<% if !current_user %>
+<%= link_to "Sign in" , new_user_session_path ,class: "btn btn-light"%>
+<br><br>
+
+<%= link_to "Sign up" , new_user_registration_path , class: "btn btn-light"%>
+<% else%>
+  <% if current_user.name==nil || current_user.mobNumber==nil  %>
+      <h4><%= link_to "Please set up your profile for a better experience" , edit_profile_path%></h4>
+  <%end%>
+
+  <h3>Products</h3>
+
+<% @products.each do |product| %>
+  <% if !product.soldOut %>
+  <div class="card w-50">
+  <div class="card-body">
+    <h5 class="card-title"><%=product.name%></h5>
+    <h6 class="card-text"><strong>category: </strong> <%=product.category%></h6>
+    <h6 class="card-text"><strong>Price: </strong> <%=product.price%></h6>
+    <br>
+    <%= link_to "show more" , product , class:"detailsbtn" %>
+    
+  </div>
+</div>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= link_to 'New Product', new_product_path , class:"btn btn-light"%>
+<% end %>
