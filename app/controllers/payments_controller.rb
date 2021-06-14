@@ -7,21 +7,22 @@ class PaymentsController < ApplicationController
     @payment = @product.payment
   end
   def new
-    @price = Product.find(session[:prod_id]).price
+    @prodId = params[:id]
+    @price = Product.find(params[:id]).price
     @payment = current_user.payments.new
   end
 
   def create 
     @payment = current_user.payments.new
     @payment.paymentMethod = payment_params
-    @payment.price = Product.find(session[:prod_id]).price
-    @payment.product_id = session[:prod_id]
+    @payment.price = Product.find(params[:id]).price
+    @payment.product_id = params[:id]
     if @payment.save 
       @prod = Product.find(session[:prod_id])
       @prod.buyerId = current_user.id
       @prod.soldOut = true
       @prod.save
-      redirect_to products_path
+      redirect_to view_payment_details_path(@payment.product)
     end
 
     

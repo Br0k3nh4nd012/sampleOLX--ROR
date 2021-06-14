@@ -1,11 +1,13 @@
 class ProfilesController < ApplicationController
   def index
-    @myProducts = current_user.products
-    @purchasedProduct = Product.where(buyerId: current_user.id)
+    @user = User.find(params[:id])
+    @myProducts = @user.products
+    @purchasedProduct = Product.where(buyerId: @user.id)
   end
 
   def edit
-    @profile = current_user
+    # @profile = current_user
+    @profile = User.find(params[:id])
   end
 
   def update
@@ -15,10 +17,14 @@ class ProfilesController < ApplicationController
     else
       redirect_to view_profile_path
     end
-  
-
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    if @user.destroy
+      redirect_to admin_users_path
+    end
+  end
 
   private 
     def profile_params

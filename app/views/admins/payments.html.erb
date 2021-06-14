@@ -1,0 +1,35 @@
+<div style="margin-left:-15px"><%= link_to 'Back', root_path %></div>
+
+
+<h1>Users </h1>
+
+<table class="table" style="background-color:azure">
+  <thead class="thead-dark"> 
+    <tr>
+        <th scope="col">Payment id</th>
+        <th scope="col">Buyer id</th>
+        <th scope="col">Buyer name</th>
+        <th scope="col">Product id</th>
+        <th scope="col">Product name</th>
+        <th scope="col">Payment Method</th>
+        <th scope="col">Total Amount</th>
+        <th scope="col">Payment on</th>
+        <th colspan="3"></th>
+    </tr>
+  </thead> 
+  <tbody>
+    <% @payments.each do |payment| %>
+        <tr>
+            <td><%= payment.id %></td>
+            <td><%= link_to payment.user.id%></td>
+            <td><%= payment.user.name %></td>
+            <td><%= payment.product.id %></td>
+            <td><%= payment.product.name %></td>  
+            <td><%= payment.paymentMethod.byteslice(19..-3)  %></td>  
+            <td><%= payment.price %></td> 
+            <td><%= payment.created_at %></td>   
+        </tr>
+      
+    <% end %>
+  </tbody>
+</table>

@@ -1,6 +1,11 @@
-<%= link_to 'Back', products_path %>
+
+<div style="margin-left:-15px"><%= link_to 'Back', products_path %></div>
 
 <div class="showProduct"> 
+<div>
+  <%= image_tag "for_sale.jpg" , class:"image-lg"%>
+</div>
+<br>
 <p style="font-size:20px">
   <strong>Name:</strong>
   <%= @product.name %>
@@ -22,8 +27,29 @@
 </p>
 
 <p style="font-size:20px">
-  <strong>User:</strong>
-  <%= @product.user_id %>
+  <strong>Posted By:</strong>
+  <%= @product.user.name %>
+</p>
+<p style="font-size:20px">
+  <strong>Posted At:</strong>
+  <%= @product.updated_at %>
+</p>
+<h5><strong>Location of Product</strong></h5>
+<p style="font-size:20px">
+  <strong>City:</strong>
+  <%= @location.city %>
+</p>
+<p style="font-size:20px">
+  <strong>State:</strong>
+  <%= @location.state %>
+</p>
+<p style="font-size:20px">
+  <strong>Country:</strong>
+  <%= @location.country %>
+</p>
+<p style="font-size:20px">
+  <strong>Postal Code:</strong>
+  <%= @location.postalCode %>
 </p>
 </div>
 <div style="margin-top:20px">

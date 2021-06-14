@@ -4,22 +4,22 @@
 <div class="showProduct">
   <p style="font-size:20px"> 
     <strong>Name:</strong>
-    <%= current_user.name %>
+    <%= @user.name %>
   </p>
   <p style="font-size:20px">
     <strong>E-mail id:</strong>
-    <%= current_user.email %>
+    <%= @user.email %>
   </p>
   <p style="font-size:20px">
     <strong>Contact Number:</strong>
-    <%= current_user.mobNumber %>
+    <%= @user.mobNumber %>
   </p>
   <p style="font-size:20px">
     <strong>Address:</strong>
-    <%= current_user.address %>
+    <%= @user.address %>
   </p>
   <div style="margin-top:25px">
-  <%= link_to "Update Profile " , edit_profile_path , class:"editbtn"%>
+  <%= link_to "Update Profile " , edit_profile_path(@user) , class:"editbtn"%>
   </div>
 </div>
 
@@ -72,7 +72,6 @@
       <th scope="col">Name</th>
       <th scope="col">Category</th>
       <th scope="col">Description</th>
-      <th scope="col">Price</th>
       <th scope="col">Price</th>
       <th colspan="3"></th>
     </tr>

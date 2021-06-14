@@ -1,5 +1,5 @@
 <h1>Payment Details</h1>
-
+<div class="showProduct">
 <p>
   <strong>Product Name:</strong>
   <%=  @product.name%>
@@ -10,11 +10,15 @@
 </p>
 <p>
   <strong>Payment Method:</strong>
-  <%=  @payment.paymentMethod %>
+  <%=  @payment.paymentMethod.byteslice(19..-3) %>
 </p>
 <p>
   <strong>Amount:</strong>
   <%=  @product.price%>
 </p>
+<br>
 <h3 style="color:green">Payment successfull</h3>
 
+</div>
+<br><br>
+<%= link_to "Go to Homepage" , root_path , class:"btn btn-light"%>

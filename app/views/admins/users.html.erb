@@ -1,0 +1,32 @@
+<div style="margin-left:-15px"><%= link_to 'Back', root_path %></div>
+
+
+<h1>Users </h1>
+
+<table class="table" style="background-color:azure">
+  <thead class="thead-dark"> 
+    <tr>
+        <th scope="col">User id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Mobile Number</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Address</th>
+        <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+        <tr>
+            <td><%= user.id %></td>
+            <td><%= link_to user.name%></td>
+            <td><%= user.mobNumber %></td>
+            <td><%= user.email %></td>
+            <td><%= user.address %></td>   
+            <td><%= link_to 'Edit', edit_profile_path(user) , class:"editbtn" %></td>
+            <td><%= link_to 'Destroy', destroy_profile_path(user) , method: :delete, data: { confirm: 'Are you sure?' } , class:"destroybtn"%></td>
+        </tr>
+      
+    <% end %>
+  </tbody>
+</table>

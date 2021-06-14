@@ -73,3 +73,32 @@
 .btnwhite{
     color: white;
 }
+
+.image{
+    height: 150px;
+    width: 200px;
+}
+.image-login{
+    height: 480px;
+    width: 650px;
+}
+.image-lg{
+    height: 300px;
+    width: 400px;
+}
+.myCard{
+    display: flex;
+    justify-content: space-between;
+}
+.myCardLogin{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+.newProd{
+    padding: 16px;
+    background-color: rgb(88, 202, 94);
+    font-size: 15px;
+    border-radius: 5px;
+}
+

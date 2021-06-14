@@ -8,8 +8,8 @@
       </p>
 </div>
 
-<%= form_with url: "/products/payment" ,model: @payment do |form| %>
-
+<%= form_with(model: @payment , url: create_payment_path(@prodId))  do |form| %>
+   
     
     <div class="field" style="width:500px">
     <%= form.select :paymentMethod, ['credit card', 'debit card','net banking','upi'] %>
@@ -17,7 +17,7 @@
     
     
     
-    <div class="actions" style="margin-top:40px">
+    <div style="margin-top:40px">
     <%= form.submit "pay" , class:"btn btn-success btnw btnwhite"%>
   </div>
   <% end %>
