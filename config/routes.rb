@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get '/profile/:id' , to: 'profiles#index' , as: 'view_profile'
   # post '/profile/update' , to: 'profiles#update' 
   get '/profile/edit/:id' , to: 'profiles#edit' , as: 'edit_profile'
-  patch '/profile/edit' , to: 'profiles#update' 
+  patch '/profile/edit' , to: 'profiles#update', as: 'update_profile' 
   delete '/profile/delete/:id' , to: 'profiles#destroy' , as: 'destroy_profile'
 
   #location routes-----------------

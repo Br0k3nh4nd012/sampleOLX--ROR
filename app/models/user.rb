@@ -4,11 +4,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  default_scope { order(created_at: :asc) }
+
   has_many :products , dependent: :destroy
   has_many :payments , dependent: :destroy
 
-  validates :name , presence: true
-  validates :mobNumber , presence: true
-  validates :address , presence: true
+  validates :mobNumber, length: { is: 10 }
+  # validates :name ,:mobNumber ,:address ,  presence: true
+
+  # validates :mobNumber , presence: true
+  # validates :address , presence: true
 
 end

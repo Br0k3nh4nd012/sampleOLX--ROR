@@ -8,14 +8,13 @@ class ProfilesController < ApplicationController
   def edit
     # @profile = current_user
     @profile = User.find(params[:id])
+    @@profile_id=@profile.id
   end
 
   def update
-    @profile = current_user
+    @profile = User.find(@@profile_id)
     if @profile.update(profile_params)
-      redirect_to view_profile_path
-    else
-      redirect_to view_profile_path
+      redirect_to view_profile_path(@profile)
     end
   end
 
