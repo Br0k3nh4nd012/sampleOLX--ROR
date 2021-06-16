@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
     #     # admin = false
     #     session[:is_admin] = false
     # end
+    
 end

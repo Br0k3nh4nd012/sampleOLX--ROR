@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
   def create
     @user = current_user
     @product = @user.products.new(product_params)
-    @product.soldOut = false
+    # @product.soldOut = false
 
     respond_to do |format|
       if @product.save 

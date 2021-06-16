@@ -4,21 +4,17 @@ class LocationsController < ApplicationController
   end
   def new
     @location = Location.new
-    @productId = params[:id]
-    @locerrors = @location.errors
+    @@productId = params[:id]
+    # @locerrors = @location.errors
   end
   def create
-    @location = Location.new(location_params)
-    @location.product_id = params[:id]
+    @location = Product.find(@@productId).build_location(location_params)
+    # @location.product_id = @@productId
     # respond_to do |format|
       if @location.save
-        
         redirect_to root_path 
-      # else
-        
-      #   @locerrors = @location.errors
-      #   respond_with(@locerrors)
-      #   render :new
+      else
+        render 'new'
       end
     # end
   end
