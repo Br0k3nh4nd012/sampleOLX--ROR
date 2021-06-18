@@ -11,7 +11,7 @@
       <h5 style="color:red">Sorry., Something went wrong.This product is already sold.</h5>
       <p style="color:red">(May be your previous attempt to payment will be succeeded. Check it in your profile.)</p>
       <%else%>
-<%= form_with(model: @payment , url: create_payment_path(@prod))  do |form| %>
+<%= form_with(model: @payment , url: product_payments_path(params[:product_id]))  do |form| %>
 
       <% if @payment.errors.any? %>
             <div id="error_explanation">

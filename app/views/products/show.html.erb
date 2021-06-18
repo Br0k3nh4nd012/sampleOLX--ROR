@@ -7,13 +7,19 @@
   <% if @product.payment %>
   <button class="btn btn-danger buy">Sold Out</button>
   <% else %>
-  <%= link_to 'Buy Now', do_payment_path(@product) , class:"btn btn-success btnwhite buy" %> <br>
+    <% if @product.user==current_user %>
+    <h5>Its your Product</h5>
+    <% else %>
+  <%= link_to 'Buy Now', new_product_payment_path(@product) , class:"btn btn-success btnwhite buy" %> <br>
+  <% end %>
   <% end %>
 </div>
 <br>
 <div class="myCard">
   <h5><strong>Details of product</strong></h5>
+  <% if @product.user == current_user || current_user.isAdmin  %>
   <%= link_to "update Details" , edit_product_path(@product) , class:"btn btn-success btnwhite" %>
+  <% end %>
 </div>
 <p style="font-size:20px">
   <strong>Name:</strong>
@@ -37,7 +43,7 @@
 
 <p style="font-size:20px">
   <strong>Posted By:</strong>
-  <%= @product.user.name %>
+  <%= link_to @product.user.name , view_profile_path(@product.user) %>
 </p>
 <p style="font-size:20px">
   <strong>Posted At:</strong>
@@ -46,12 +52,13 @@
 <hr />
 <div class="myCard">
   <h5><strong>Location of Product</strong></h5>
-  <% if @product.location %>
-    <%= link_to "update location" ,edit_product_location_path(@product), class:"btn btn-success btnwhite" %>
-  <% else %>
-    <%= link_to "update location" ,new_product_location_path(@product), class:"btn btn-success btnwhite" %>
-  <% end %>
-
+    <% if @product.user == current_user || current_user.isAdmin %>
+      <% if @product.location %>
+        <%= link_to "update location" ,edit_product_location_path(@product), class:"btn btn-success btnwhite" %>
+      <% else %>
+        <%= link_to "update location" ,new_product_location_path(@product), class:"btn btn-success btnwhite" %>
+      <% end %>
+    <% end %>
   </div>
 <br>
 <% if @product.location %>

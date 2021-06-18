@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
   before_action :checkLogin, only: %i[ index show edit update destroy ]
+  before_action :checkUser, only: %i[ edit ]
 
   # GET /products or /products.json
   def index
@@ -93,6 +94,15 @@ class ProductsController < ApplicationController
         redirect_to new_user_session_path
       end
     end
+
+    def checkUser
+      if current_user == Product.find(params[:id]).user
+        return true
+      else
+        redirect_to view_profile_path(current_user)
+      end
+    end
+
 
     # Only allow a list of trusted parameters through.
     def product_params

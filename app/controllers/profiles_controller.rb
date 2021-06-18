@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
-  before_action :checkLogin
-  # before_action :checkUser , only: %i[ index ]
+  before_action :checkLogin 
+  before_action :checkUser , only: %i[ edit , create ]
 
 
   def index
@@ -8,6 +8,7 @@ class ProfilesController < ApplicationController
     @myProducts = @user.products
     @purchasedProduct = Product.where(buyerId: @user.id)
   end
+  
   # get '/profile/edit/:id' , to: 'profiles#edit' , as: 'edit_profile'
   def edit
     # @profile = current_user
@@ -49,11 +50,11 @@ class ProfilesController < ApplicationController
       end
     end
 
-    # def checkUser
-    #   if current_user.isAdmin
-    #     return true
-    #   else
-    #     redirect_to view_profile_path(current_user)
-    #   end
-    # end
+    def checkUser
+      if current_user.isAdmin or current_user == User.find(params[:id])
+        return true
+      else
+        redirect_to view_profile_path(current_user)
+      end
+    end
 end

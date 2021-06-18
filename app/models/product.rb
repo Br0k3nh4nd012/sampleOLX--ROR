@@ -17,16 +17,18 @@ class Product < ApplicationRecord
     self.soldOut = false
   end
 
+  before_update :checkUser
   
   before_destroy :checkUser
   def checkUser
-    if self.user.isAdmin || self.user = User.current
+    if self.user.isAdmin || self.user == User.current
       return true
     else
       return false
     end
   end
 
+  
   # validates :category , presence: true
   # validates :description , presence: true
   # validates :price , presence: true

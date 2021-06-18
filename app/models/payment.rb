@@ -13,10 +13,10 @@ class Payment < ApplicationRecord
     after_save :updateProduct
 
     def updateProduct
-      prod = Product.find(self.product.id)
-      prod.buyerId = self.user.id
-      prod.soldOut = true
-      prod.save
+      prod = self.product
+      # prod.buyerId = self.user.id
+      # prod.soldOut = true
+      prod.update(buyerId: self.user.id , soldOut: true)
     end
 
     before_create :manipulatePayMethod

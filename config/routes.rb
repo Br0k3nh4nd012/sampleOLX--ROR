@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'payments/index'
   resources :products do 
     resources :locations , only: [:new,:create , :edit , :update]
+    resources :payments , only: [:new , :create , :show]
   end
   devise_for :users
   root 'products#index'
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
   #payment routes---------------
   get '/products/:id/payment' , to: 'payments#new' , as: 'do_payment'
   post '/products/payment/:id' , to: 'payments#create' , as: 'create_payment'
-  get '/:id/paymentDetails' , to: 'payments#show' , as: 'view_payment_details'
+  get 'products/:id/paymentDetails' , to: 'payments#show' , as: 'view_payment_details'
 
   #profile routes----------------
   get '/profile/:id' , to: 'profiles#index' , as: 'view_profile'
@@ -31,4 +32,6 @@ Rails.application.routes.draw do
   get 'admin/users', to: 'admins#users', as: 'admin_users'
   get 'admin/products', to: 'admins#products', as: 'admin_products'
   get 'admin/payments', to: 'admins#payments', as: 'admin_payments'
+  get 'admin/new_user', to: 'admins#newUser', as: 'admin_new_user'
+  post 'admin/create_user' , to: 'admins#createUser', as: 'admin_create_user'
 end
