@@ -9,6 +9,7 @@
         <th scope="col">Product id</th>
         <th scope="col">Name</th>
         <th scope="col">Catergory</th>
+        <th scope="col">Product location</th>
         <th scope="col">Description</th>
         <th scope="col">price</th>
         <th scope="col">Posted by</th>
@@ -23,8 +24,13 @@
     <% @products.each do |product| %>
         <tr>
             <td><%= product.id %></td>
-            <td><%= link_to product.name%></td>
+            <td><%= link_to product.name  , product %></td>
             <td><%= product.category %></td>
+            <%if product.location%>
+              <td><%= product.location.city %>,<%= product.location.state %></td>
+            <%else%>
+              <td style="color:red">location not mentioned</td>            
+            <% end %>
             <td><%= product.description %></td>
             <td><%= product.price %></td>  
             <td><%= link_to product.user.name , view_profile_path(product.user)%></td>  
@@ -40,7 +46,7 @@
               <td></td>
             <% end %>
             <td><%= link_to 'Edit', edit_product_path(product) , class:"editbtn" %></td>
-            <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } , class:"destroybtn"%></td> 
+            <td><%= link_to 'Destroy', product , method: :delete, data: { confirm: 'Are you sure?' } , class:"destroybtn"%></td> 
             
         </tr>
       

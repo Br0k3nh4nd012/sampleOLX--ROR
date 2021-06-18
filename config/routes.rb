@@ -3,13 +3,15 @@ Rails.application.routes.draw do
   get 'locations/index'
   get 'profiles/index'
   get 'payments/index'
-  resources :products
+  resources :products do 
+    resources :locations , only: [:new,:create , :edit , :update]
+  end
   devise_for :users
   root 'products#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   #payment routes---------------
   get '/products/:id/payment' , to: 'payments#new' , as: 'do_payment'
-  post '/products/payment' , to: 'payments#create' , as: 'create_payment'
+  post '/products/payment/:id' , to: 'payments#create' , as: 'create_payment'
   get '/:id/paymentDetails' , to: 'payments#show' , as: 'view_payment_details'
 
   #profile routes----------------
@@ -19,8 +21,10 @@ Rails.application.routes.draw do
   delete '/profile/delete/:id' , to: 'profiles#destroy' , as: 'destroy_profile'
 
   #location routes-----------------
-  get '/products/:id/location' , to: 'locations#new' , as: 'fill_location'
-  post '/products/locationadd', to: 'locations#create' ,as: 'add_location'
+  # get '/products/:id/location' , to: 'locations#new' , as: 'fill_location'
+  # post '/products/locationadd', to: 'locations#create' ,as: 'add_location'
+  # get '/products/:id/location/edit' , to: 'locations#edit' ,as: 'edit_location'
+  # patch '/products/location' , to: 'locations#update' ,as: 'update_location'
 
   #admin routes-----------
   get 'admins/index' , to: 'admins#index', as: 'admin_home'

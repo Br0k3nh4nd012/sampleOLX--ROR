@@ -9,6 +9,8 @@
         <th scope="col">Payment id</th>
         <th scope="col">Buyer id</th>
         <th scope="col">Buyer name</th>
+        <th scope="col">Seller id</th>
+        <th scope="col">Seller name</th>
         <th scope="col">Product id</th>
         <th scope="col">Product name</th>
         <th scope="col">Payment Method</th>
@@ -23,6 +25,8 @@
             <td><%= payment.id %></td>
             <td><%= link_to payment.user.id%></td>
             <td><%= link_to payment.user.name , view_profile_path(payment.user)%></td>
+            <td><%= payment.product.user.id %></td>
+            <td><%= link_to payment.product.user.name , view_profile_path(payment.product.user)%></td>
             <td><%= payment.product.id %></td>
             <td><%= link_to payment.product.name , product_path(payment.product) %></td>  
             <td><%= payment.paymentMethod.byteslice(19..-3)  %></td>  

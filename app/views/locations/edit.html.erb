@@ -1,0 +1,7 @@
+<h2>Update Location</h2>
+<p>(place where the product is located)</p>
+
+
+<%= form_with(model: @location , url: product_location_path(params[:product_id]) , local: true) do |form| %>
+    <%= render partial: 'form', location: @location , locals: { form: form } %>
+<% end %>

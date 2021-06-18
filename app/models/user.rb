@@ -23,6 +23,27 @@ class User < ApplicationRecord
 
   #callbacks-----------------------
 
-  
+  before_create do
+    puts self.email
+  end
 
+  before_update :makeCapital
+
+  def makeCapital
+    self.name = name.capitalize
+    self.address = address.capitalize
+  end
+
+  after_update do 
+    puts self.name
+  end
+
+
+
+  def self.current
+    Thread.current[:user]
+  end
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
 end

@@ -111,4 +111,11 @@
     
     align-items: center;
 }
+.buy{
+    height: max-content
+}
+
+.dropdown{
+    height: 50px;
+}
 
