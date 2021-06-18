@@ -1,7 +1,16 @@
 <h2>Location</h2>
+<p>(place where the product is located)</p>
+<%= form_with(model: @location , url: add_location_path) do |form| %>
+  <% if @location.errors.any? %>
+  <ul>
+  <% @location.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+  </ul>
+<% end %>
 
-<%= form_with(model: @location , url: add_location_path(@productId)) do |form| %>
-    <div class="field" style="width:30%">
+
+  <div class="field" style="width:30%">
     <%= form.label :city %>
     <%= form.text_field :city ,  class:"form-control" %>
   </div>

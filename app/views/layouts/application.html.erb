@@ -17,15 +17,20 @@
       
       <%if current_user%>
         <div class="navbarMine">
-        <div style="display:flex">
-        <h3 style="padding:10px">OLX</h3>
-        <%= link_to "Home" , root_path , class:"signOutText"%>
-        </div>
-        <div style="display:flex">
-          <h5 style="padding:15px"><%=current_user.name%></h5>
-          <%= link_to "profile" , view_profile_path(current_user) , class:"signOutText"%>
-          <%= link_to "Sign out" , destroy_user_session_path , method: :delete , class:"signOutText"%>
-        </div>
+          <div style="display:flex">
+            <h3 style="padding:10px">Olx</h3>
+            <%= link_to "Home" , root_path , class:"signOutText"%>
+            <% if current_user.isAdmin %>
+              <%= link_to "Users" , admin_users_path , class:"signOutText"%>
+              <%= link_to "Products" , admin_products_path , class:"signOutText"%>
+              <%= link_to "Payments" , admin_payments_path , class:"signOutText"%>
+            <% end %>
+          </div>
+          <div style="display:flex">
+            <h5 style="padding:15px"><%=current_user.name%></h5>
+            <%= link_to "profile" , view_profile_path(current_user) , class:"signOutText"%>
+            <%= link_to "Sign out" , destroy_user_session_path , method: :delete , class:"signOutText"%>
+          </div>
         </div>
 
       <%end%>

@@ -28,16 +28,18 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+    @user = Product.find(params[:id]).user
+
   end
 
   # POST /products or /products.json
   def create
     @user = current_user
     @product = @user.products.new(product_params)
-    @product.soldOut = false
+    # @product.soldOut = false
 
     respond_to do |format|
-      if @product.save
+      if @product.save 
         
         format.html { redirect_to fill_location_path(@product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }

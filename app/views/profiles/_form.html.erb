@@ -10,24 +10,24 @@
         </ul>
       </div>
     <% end %>
-    <div class="field">
+    <div class="field" style="width:30%">
       <%= form.label :name %>
-      <%= form.text_field :name %>
+      <%= form.text_field :name ,  class:"form-control"%>
     </div>
-    <div class="field">
+    <div class="field" style="width:30%">
       <%= form.label :email%>
-      <%= form.text_field :email %>
+      <%= form.text_field :email , :disabled => true,  class:"form-control"%>
     </div>
-    <div class="field">
+    <div class="field" style="width:30%">
       <%= form.label :mobNumber , "Mobile Number"%>
-      <%= form.text_field :mobNumber %>
+      <%= form.text_field :mobNumber ,  class:"form-control"%>
     </div>
-    <div class="field">
+    <div class="field" style="width:30%">
       <%= form.label :address %>
-      <%= form.text_area :address %>
+      <%= form.text_area :address ,  class:"form-control"%>
     </div>
 
-    <div class="actions">
-      <%= form.submit %>
+    <div class="actions" style="margin-top:40px">
+      <%= form.submit "Update Profile",class:"btn btn-success "%>
     </div>
   <% end %>

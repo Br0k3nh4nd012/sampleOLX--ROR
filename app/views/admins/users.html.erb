@@ -19,7 +19,7 @@
     <% @users.each do |user| %>
         <tr>
             <td><%= user.id %></td>
-            <td><%= link_to user.name%></td>
+            <td><%= link_to user.name , view_profile_path(user) %></td>
             <td><%= user.mobNumber %></td>
             <td><%= user.email %></td>
             <td><%= user.address %></td>   

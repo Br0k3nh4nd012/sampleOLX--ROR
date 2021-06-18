@@ -6,6 +6,10 @@
   <%= image_tag "for_sale.jpg" , class:"image-lg"%>
 </div>
 <br>
+<div class="myCard">
+  <h5><strong>Details of product</strong></h5>
+  <%= link_to "update location" , class:"btn btn-success btnwhite" %>
+</div>
 <p style="font-size:20px">
   <strong>Name:</strong>
   <%= @product.name %>
@@ -34,7 +38,12 @@
   <strong>Posted At:</strong>
   <%= @product.updated_at %>
 </p>
-<h5><strong>Location of Product</strong></h5>
+<hr />
+<div class="myCard">
+  <h5><strong>Location of Product</strong></h5>
+  <%= link_to "update location" , class:"btn btn-success btnwhite" %>
+</div>
+<br>
 <p style="font-size:20px">
   <strong>City:</strong>
   <%= @location.city %>
@@ -52,8 +61,10 @@
   <%= @location.postalCode %>
 </p>
 </div>
-<div style="margin-top:20px">
-<%= link_to 'Buy Now', do_payment_path(@product) , class:"btn btn-success btnwhite" %> <br>
-</div>
+<% if current_user != @product.user%>
+  <div style="margin-top:20px">
+  <%= link_to 'Buy Now', do_payment_path(@product) , class:"btn btn-success btnwhite" %> <br>
+  </div>
+<% end %>
 
 
