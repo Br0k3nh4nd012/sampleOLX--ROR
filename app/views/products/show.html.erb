@@ -2,13 +2,18 @@
 <div style="margin-left:-15px"><%= link_to 'Back', products_path %></div>
 
 <div class="showProduct"> 
-<div>
+<div class="myCard">
   <%= image_tag "for_sale.jpg" , class:"image-lg"%>
+  <% if @product.payment %>
+  <button class="btn btn-danger buy">Sold Out</button>
+  <% else %>
+  <%= link_to 'Buy Now', do_payment_path(@product) , class:"btn btn-success btnwhite buy" %> <br>
+  <% end %>
 </div>
 <br>
 <div class="myCard">
   <h5><strong>Details of product</strong></h5>
-  <%= link_to "update location" , class:"btn btn-success btnwhite" %>
+  <%= link_to "update Details" , edit_product_path(@product) , class:"btn btn-success btnwhite" %>
 </div>
 <p style="font-size:20px">
   <strong>Name:</strong>
@@ -27,7 +32,7 @@
 
 <p style="font-size:20px">
   <strong>Price:</strong>
-  <%= @product.price %>
+  <%= number_with_delimiter(@product.price) %>
 </p>
 
 <p style="font-size:20px">
@@ -41,30 +46,37 @@
 <hr />
 <div class="myCard">
   <h5><strong>Location of Product</strong></h5>
-  <%= link_to "update location" , class:"btn btn-success btnwhite" %>
-</div>
+  <% if @product.location %>
+    <%= link_to "update location" ,edit_product_location_path(@product), class:"btn btn-success btnwhite" %>
+  <% else %>
+    <%= link_to "update location" ,new_product_location_path(@product), class:"btn btn-success btnwhite" %>
+  <% end %>
+
+  </div>
 <br>
-<p style="font-size:20px">
-  <strong>City:</strong>
-  <%= @location.city %>
-</p>
-<p style="font-size:20px">
-  <strong>State:</strong>
-  <%= @location.state %>
-</p>
-<p style="font-size:20px">
-  <strong>Country:</strong>
-  <%= @location.country %>
-</p>
-<p style="font-size:20px">
-  <strong>Postal Code:</strong>
-  <%= @location.postalCode %>
-</p>
+<% if @product.location %>
+  <p style="font-size:20px">
+    <strong>City:</strong>
+    <%= @location.city %>
+  </p>
+  <p style="font-size:20px">
+    <strong>State:</strong>
+    <%= @location.state %>
+  </p>
+  <p style="font-size:20px">
+    <strong>Country:</strong>
+    <%= @location.country %>
+  </p>
+  <p style="font-size:20px">
+    <strong>Postal Code:</strong>
+    <%= @location.postalCode %>
+  </p>
+  <% else %>
+    <p style="color:red">Location not yet mentioned</p>
+  <% end %>
 </div>
 <% if current_user != @product.user%>
-  <div style="margin-top:20px">
-  <%= link_to 'Buy Now', do_payment_path(@product) , class:"btn btn-success btnwhite" %> <br>
-  </div>
+  
 <% end %>
 
 

@@ -1,5 +1,6 @@
 <div style="margin-left:-15px"><%= link_to 'Back', root_path %></div>
 
+<% if current_user.isAdmin || current_user== @user %>
 <h1>My Profile</h1>
 <div class="showProduct">
   <p style="font-size:20px"> 
@@ -12,7 +13,7 @@
   </p>
   <p style="font-size:20px">
     <strong>Contact Number:</strong>
-    <%= @user.mobNumber %>
+    <%= number_to_phone(@user.mobNumber) %>
   </p>
   <p style="font-size:20px">
     <strong>Address:</strong>
@@ -33,6 +34,7 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Category</th>
+      <th scope="col">Product Location</th>
       <th scope="col">Description</th>
       <th scope="col">Price</th>
       <th scope="col">Sold Out</th>
@@ -45,6 +47,11 @@
         <tr>
             <td><%= link_to product.name  , product%></td>
             <td><%= product.category %></td>
+            <%if product.location%>
+              <td><%= product.location.city %>,<%= product.location.state %></td>
+            <%else%>
+              <td style="color:red">location not mentioned</td>
+            <% end %>
             <td><%= product.description %></td>
             <td><%= product.price %></td>   
             <% if product.soldOut %>
@@ -93,6 +100,10 @@
 <%else%>
 <h4 style="color:red">You have got nothing!!</h4>
 <%end%>
+
+<%else%>
+<h4 style="color:red">Do not try to access unneccessery information</h4>
+<% end %>
 
 
 

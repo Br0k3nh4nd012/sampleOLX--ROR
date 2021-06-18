@@ -1,4 +1,7 @@
 class PaymentsController < ApplicationController
+  before_action :checkLogin
+
+
   def index
   end
   def show
@@ -7,24 +10,21 @@ class PaymentsController < ApplicationController
     @payment = @product.payment
   end
   def new
-    # @prodId = params[:id]
-    @price = Product.find(params[:id]).price
+    @prod= Product.find(params[:id])
+    @price = @prod.price
     @payment = current_user.payments.new
   end
 
   def create 
     @payment = current_user.payments.new
     @payment.paymentMethod = payment_params
-    @payment.price = Product.find(session[:prod_id]).price
-    @payment.product_id = session[:prod_id]
+    @payment.price = Product.find(params[:id]).price
+    @payment.product_id = params[:id]
     if @payment.save 
-      @prod = Product.find(session[:prod_id])
-      @prod.buyerId = current_user.id
-      @prod.soldOut = true
-      @prod.save
+      
       redirect_to view_payment_details_path(@payment.product)
     else
-      render 'new'
+      redirect_to do_payment_path(params[:id])
     end
 
     
@@ -33,5 +33,13 @@ class PaymentsController < ApplicationController
   private 
     def payment_params
       params.require(:payment).permit(:paymentMethod)
+    end
+
+    def checkLogin
+      if current_user
+        return true
+      else
+        redirect_to root_path
+      end
     end
 end

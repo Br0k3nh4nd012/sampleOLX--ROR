@@ -1,15 +1,15 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :checkLogin, only: %i[ index show edit update destroy ]
 
   # GET /products or /products.json
   def index
 
-    if current_user && current_user.isAdmin
+    if current_user.isAdmin 
       redirect_to admin_home_path
-    elsif current_user
-      @products = Product.all.where.not(user_id: current_user.id )
     else
-      redirect_to new_user_session_path
+      # @products = Product.all.where.not(user_id: current_user.id )
+      @products = Product.other_products(current_user)
     end
   end
 
@@ -22,7 +22,6 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-
     @product = Product.new
   end
 
@@ -41,7 +40,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.save 
         
-        format.html { redirect_to fill_location_path(@product), notice: "Product was successfully created." }
+        format.html { redirect_to new_product_location_path(@product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -71,8 +70,12 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      if current_user.isAdmin
+        format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      else
+        format.html { redirect_to admin_products_url, notice: "Product was successfully destroyed." }
       format.json { head :no_content }
+      end
     end
   end
 
@@ -80,6 +83,15 @@ class ProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
+    end
+
+    #check for is logged in
+    def checkLogin
+      if current_user
+        return true
+      else
+        redirect_to new_user_session_path
+      end
     end
 
     # Only allow a list of trusted parameters through.
