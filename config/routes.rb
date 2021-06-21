@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   # <div style="float:right"><%= link_to 'New Product', new_product_path , class:"newProd"%></div>
   
   get 'locations/index'
