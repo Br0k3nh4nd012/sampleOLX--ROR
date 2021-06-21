@@ -15,7 +15,9 @@
  */
  body{
      margin: 0% 0%;
-     background-color: rgb(134, 233, 233);
+     /* background-color: rgb(134, 233, 233); */
+     background-color: #A7C4BC;
+     /* background-color: #F0F0F0; */
  }
  .input_box{
      width: 30%;
@@ -24,12 +26,25 @@
     outline: none;
 
  }
+ .alert{
+     text-align: center;
+     /* width: 300px; */
+ }
+ .mainBody{
+     /* margin-top: 100px; */
+    margin: 20px 40px;
+ }
 
  .navbarMine{
-     background-color: azure;
+     background-color: white;
+     /* background-color: #B2B8A3; */
      justify-content: space-between;
      display: flex;
      justify-items: center;
+     position: sticky;
+     width: 100%;
+     top: 0;
+     z-index: 2;
  }
  .signOutText{
     padding: 20px;
@@ -118,4 +133,19 @@
 .dropdown{
     height: 50px;
 }
+.filterBar{
+    display: flex;
 
+    /* justify-content: space-between; */
+    
+    align-items: center;
+    padding: auto 20px;
+    margin-bottom: 20px;
+}
+.removeFilter{
+    margin-left: 20px;
+    margin-top: -18px;
+}
+.a-btn:visited{
+    color: azure;
+}

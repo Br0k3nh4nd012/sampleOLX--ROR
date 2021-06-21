@@ -1,17 +1,17 @@
-<%= link_to 'Back', product_path(session[:prod_id]) %>
+<div style="margin-left:-15px"><%= link_to 'Back', product_path(session[:prod_id]) %></div>
 
 <h2>Payment </h2>
 <div style="margin-top:20px">
       <p style="font-size:20px">
-      <strong>Price: </strong>
-      <%= @price %>
+      <strong>Total Amount: </strong>
+      <%= @price %> .Rs
       </p>
 </div>
 <% if @prod.soldOut%>
       <h5 style="color:red">Sorry., Something went wrong.This product is already sold.</h5>
       <p style="color:red">(May be your previous attempt to payment will be succeeded. Check it in your profile.)</p>
       <%else%>
-<%= form_with(model: @payment , url: create_payment_path(@prod))  do |form| %>
+<%= form_with(model: @payment , url: product_payments_path(params[:product_id]))  do |form| %>
 
       <% if @payment.errors.any? %>
             <div id="error_explanation">
@@ -25,11 +25,19 @@
             </div>
       <% end %>
   
-   
+   <div class="field>
+      <%= form.label :paymentGateway,"Payment through:"%><br>
+      <div style="margin: 15px 20px ">
+      <%= form.radio_button :paymentGateway, 'razorPay' %> Razor pay<br />
+      <%= form.radio_button :paymentGateway, 'amazonPay' %> Amazon pay<br />
+      <%= form.radio_button :paymentGateway, 'olxPayments' %> Olx payments<br />
+      <%= form.radio_button :paymentGateway, 'paytm' %> Paytm<br />
+      </div>
+   </div>
     
     <div class="field" style="width:500px">
-    <%= form.label :paymentMethod %>
-    <%= form.select :paymentMethod, ['Credit card', 'Debit card','Net banking','UPI'] ,{},{ class:"form-control" } %>
+    <%= form.label :paymentMethod ,"Payment Method:"%>
+    <%= form.select :paymentMethod, options_for_select(['Credit card', 'Debit card','Net banking','UPI'],'payment method') ,{},{ class:"form-control" } %>
     </div>
     
     

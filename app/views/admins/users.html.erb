@@ -1,7 +1,9 @@
 <div style="margin-left:-15px"><%= link_to 'Back', root_path %></div>
 
-
-<h1>Users </h1>
+<div class="myCard">
+  <h1>Users </h1>
+  <%= link_to "add User" , admin_new_user_path(current_user) , class:"btn btn-success a-btn" , style:"height:max-content" %>
+</div>
 
 <table class="table" style="background-color:azure">
   <thead class="thead-dark"> 
@@ -19,12 +21,16 @@
     <% @users.each do |user| %>
         <tr>
             <td><%= user.id %></td>
+            <% if user.name %>
             <td><%= link_to user.name , view_profile_path(user) %></td>
+            <% else %>
+            <td style="color:red">Not yet Updated</td>
+            <% end %>
             <td><%= user.mobNumber %></td>
             <td><%= user.email %></td>
             <td><%= user.address %></td>   
-            <td><%= link_to 'Edit', edit_profile_path(user) , class:"editbtn" %></td>
-            <td><%= link_to 'Destroy', destroy_profile_path(user) , method: :delete, data: { confirm: 'Are you sure?' } , class:"destroybtn"%></td>
+            <td><%= link_to 'Edit', edit_profile_path(user) , class:"btn-sm btn-success a-btn" %></td>
+            <td><%= link_to 'Destroy', destroy_profile_path(user) , method: :delete, data: { confirm: 'Are you sure?' } , class:"btn-sm btn-danger a-btn"%></td>
         </tr>
       
     <% end %>

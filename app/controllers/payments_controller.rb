@@ -1,16 +1,16 @@
 class PaymentsController < ApplicationController
-  before_action :checkLogin
+  before_action :authenticate_user!
 
 
   def index
   end
   def show
     # @payment = current_user.payments.where(product_id: params[:id])
-    @product = Product.find(params[:id])
+    @product = Product.find(params[:product_id])
     @payment = @product.payment
   end
   def new
-    @prod= Product.find(params[:id])
+    @prod= Product.find(params[:product_id])
     @price = @prod.price
     @payment = current_user.payments.new
   end
@@ -18,13 +18,19 @@ class PaymentsController < ApplicationController
   def create 
     @payment = current_user.payments.new
     @payment.paymentMethod = payment_params
-    @payment.price = Product.find(params[:id]).price
-    @payment.product_id = params[:id]
+    @payment.price = Product.find(params[:product_id]).price
+    @payment.product_id = params[:product_id]
     if @payment.save 
-      
-      redirect_to view_payment_details_path(@payment.product)
+      @prod = Product.find(params[:product_id])
+      # @prod.buyerId = @payment.user.id
+      # @prod.soldOut = true
+      if @prod.update(buyerId: @payment.user.id , soldOut: true)
+        flash[:notice] = "Product Updated successfully!!"
+        redirect_to product_payment_path(product_id: @payment.product , id: @payment)
+      end
     else
-      redirect_to do_payment_path(params[:id])
+      flash[:alert] = "Payment failed!!"
+      redirect_to new_product_payment_path(params[:product_id])
     end
 
     
@@ -35,11 +41,12 @@ class PaymentsController < ApplicationController
       params.require(:payment).permit(:paymentMethod)
     end
 
-    def checkLogin
-      if current_user
-        return true
-      else
-        redirect_to root_path
-      end
-    end
+    # def checkLogin
+    #   if current_user
+    #     return true
+    #   else
+    #     flash[:alert] = "Unauthorized access.Login Required."
+    #     redirect_to root_path
+    #   end
+    # end
 end

@@ -13,8 +13,8 @@ class User < ApplicationRecord
   # validates :mobNumber, format: { with: /\A[0-9]+\z/,
   #   message: "only allows digits" }
     # or 
-  validates :mobNumber, numericality: {  message: "only allows digits"},on: :update
-
+  validates :mobNumber, numericality: {  message: "only allows digits"}, uniqueness: true ,on: :update
+  # validates :mobNumber, uniqueness: true ,on: :update
   validates :name , :address , length: { minimum: 3 , message: "Enter a valid %{attribute}"} ,on: :update
   # validates :mobNumber , presence: true
   validates :name , :address , :mobNumber , presence: true, on: :update
@@ -28,7 +28,6 @@ class User < ApplicationRecord
   end
 
   before_update :makeCapital
-
   def makeCapital
     self.name = name.capitalize
     self.address = address.capitalize
