@@ -1,5 +1,5 @@
 class Location < ApplicationRecord
-  belongs_to :product
+  belongs_to :locatable , polymorphic: true
 
   validates :city , :state , :country , :postalCode , presence:true
   validates :postalCode, length: { is: 6 }
@@ -8,10 +8,10 @@ class Location < ApplicationRecord
 
   before_create :checkProduct
   def checkProduct
-    if self.product_id
+    if self.locatable_type=='Product'
       return true
     else
-      self.errors.add(:product_id , "No product found to add location")
+      self.errors.add(:locatable_id , "No product found to add location")
       return false
   end
 end

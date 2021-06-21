@@ -10,7 +10,7 @@
     <% if @product.user==current_user %>
     <h5>Its your Product</h5>
     <% else %>
-  <%= link_to 'Buy Now', new_product_payment_path(@product) , class:"btn btn-success btnwhite buy" %> <br>
+  <%= link_to 'Buy Now', new_product_payment_path(@product) , class:"btn btn-success a-btn buy" %> <br>
   <% end %>
   <% end %>
 </div>
@@ -18,7 +18,7 @@
 <div class="myCard">
   <h5><strong>Details of product</strong></h5>
   <% if @product.user == current_user || current_user.isAdmin  %>
-  <%= link_to "update Details" , edit_product_path(@product) , class:"btn btn-success btnwhite" %>
+  <%= link_to "update Details" , edit_product_path(@product) , class:"btn btn-success a-btn" %>
   <% end %>
 </div>
 <p style="font-size:20px">

@@ -1,10 +1,10 @@
-<%= link_to 'Back', product_path(session[:prod_id]) %>
+<div style="margin-left:-15px"><%= link_to 'Back', product_path(session[:prod_id]) %></div>
 
 <h2>Payment </h2>
 <div style="margin-top:20px">
       <p style="font-size:20px">
-      <strong>Price: </strong>
-      <%= @price %>
+      <strong>Total Amount: </strong>
+      <%= @price %> .Rs
       </p>
 </div>
 <% if @prod.soldOut%>
@@ -25,11 +25,19 @@
             </div>
       <% end %>
   
-   
+   <div class="field>
+      <%= form.label :paymentGateway,"Payment through:"%><br>
+      <div style="margin: 15px 20px ">
+      <%= form.radio_button :paymentGateway, 'razorPay' %> Razor pay<br />
+      <%= form.radio_button :paymentGateway, 'amazonPay' %> Amazon pay<br />
+      <%= form.radio_button :paymentGateway, 'olxPayments' %> Olx payments<br />
+      <%= form.radio_button :paymentGateway, 'paytm' %> Paytm<br />
+      </div>
+   </div>
     
     <div class="field" style="width:500px">
-    <%= form.label :paymentMethod %>
-    <%= form.select :paymentMethod, ['Credit card', 'Debit card','Net banking','UPI'] ,{},{ class:"form-control" } %>
+    <%= form.label :paymentMethod ,"Payment Method:"%>
+    <%= form.select :paymentMethod, options_for_select(['Credit card', 'Debit card','Net banking','UPI'],'payment method') ,{},{ class:"form-control" } %>
     </div>
     
     

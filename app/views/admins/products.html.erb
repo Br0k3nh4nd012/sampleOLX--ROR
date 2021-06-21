@@ -1,7 +1,7 @@
 <div style="margin-left:-15px"><%= link_to 'Back', root_path %></div>
 <div class="myCard">
   <h1>Products </h1>
-  <div style="float:right"><%= link_to 'New Product', new_product_path , class:"newProd"%></div>
+  <div style="float:right"><%= link_to 'New Product', new_product_path , class:"btn btn-success a-btn" %></div>
 </div>
 <table class="table" style="background-color:azure">
   <thead class="thead-dark"> 
@@ -45,8 +45,8 @@
             <% else %>
               <td></td>
             <% end %>
-            <td><%= link_to 'Edit', edit_product_path(product) , class:"editbtn" %></td>
-            <td><%= link_to 'Destroy', product , method: :delete, data: { confirm: 'Are you sure?' } , class:"destroybtn"%></td> 
+            <td><%= link_to 'Edit', edit_product_path(product) , class:"btn-sm btn-success a-btn" %></td>
+            <td><%= link_to 'Destroy', product , method: :delete, data: { confirm: 'Are you sure?' } , class:"btn-sm btn-danger a-btn"%></td> 
             
         </tr>
       

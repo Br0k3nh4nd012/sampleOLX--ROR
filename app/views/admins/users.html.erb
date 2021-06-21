@@ -2,7 +2,7 @@
 
 <div class="myCard">
   <h1>Users </h1>
-  <%= link_to "add User" , admin_new_user_path(current_user) , class:"btn btn-success" , style:"height:max-content" %>
+  <%= link_to "add User" , admin_new_user_path(current_user) , class:"btn btn-success a-btn" , style:"height:max-content" %>
 </div>
 
 <table class="table" style="background-color:azure">
@@ -29,8 +29,8 @@
             <td><%= user.mobNumber %></td>
             <td><%= user.email %></td>
             <td><%= user.address %></td>   
-            <td><%= link_to 'Edit', edit_profile_path(user) , class:"editbtn" %></td>
-            <td><%= link_to 'Destroy', destroy_profile_path(user) , method: :delete, data: { confirm: 'Are you sure?' } , class:"destroybtn"%></td>
+            <td><%= link_to 'Edit', edit_profile_path(user) , class:"btn-sm btn-success a-btn" %></td>
+            <td><%= link_to 'Destroy', destroy_profile_path(user) , method: :delete, data: { confirm: 'Are you sure?' } , class:"btn-sm btn-danger a-btn"%></td>
         </tr>
       
     <% end %>

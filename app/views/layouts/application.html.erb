@@ -12,18 +12,32 @@
   </head>
 
   <body>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      
+      <% if notice %>
+      <div class="notice alert alert-success alert-dismissible fade show" role="alert">
+           <%= notice %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+        
+      <% if alert %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Alert: </strong> <%= alert %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
       <%if current_user %>
-        <div class="navbarMine">
+        <nav class="navbarMine">
           <div style="display:flex">
             <h3 style="padding:10px">Olx</h3>
             <%= link_to "Home" , root_path , class:"signOutText"%>
             <% if current_user.isAdmin %>
-              <%= link_to "Users" , admin_users_path , class:"signOutText"%>
-              <%= link_to "Products" , admin_products_path , class:"signOutText"%>
-              <%= link_to "Payments" , admin_payments_path , class:"signOutText"%>
+              <%= link_to "Users" , ad_users_path , class:"signOutText"%>
+              <%= link_to "Products" , ad_products_path , class:"signOutText"%>
+              <%= link_to "Payments" , ad_payments_path , class:"signOutText"%>
             <% end %>
           </div>
           <div style="display:flex">
@@ -31,10 +45,10 @@
             <%= link_to "profile" , view_profile_path(current_user) , class:"signOutText"%>
             <%= link_to "Sign out" , destroy_user_session_path , method: :delete , class:"signOutText"%>
           </div>
-        </div>
+        </nav>
 
       <%end%>
-      <div style="margin: 20px 40px">
+      <div class="mainBody">
         <%= yield %>
         </div>
       

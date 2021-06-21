@@ -1,13 +1,14 @@
 class Product < ApplicationRecord
   belongs_to :user
   has_one :payment , dependent: :destroy
-  has_one :location , dependent: :destroy
+  has_one :location ,as: :locatable, dependent: :destroy
   #scopes--------------
   default_scope { order(created_at: :asc) }
   scope :other_products , ->(current_user) { where("user_id != ?" , current_user.id)}
 
   #validations-----------------
   validates :name ,:category, :description, :price,  presence: true
+  validates :price , numericality: { greater_than: 0 }
   # validates :soldOut, exclusion: [nil]
 
 
@@ -16,6 +17,7 @@ class Product < ApplicationRecord
   def setSoldOut
     self.soldOut = false
   end
+
 
   before_update :checkUser
   

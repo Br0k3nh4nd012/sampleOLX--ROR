@@ -29,7 +29,7 @@
             <td><%= link_to payment.product.user.name , view_profile_path(payment.product.user)%></td>
             <td><%= payment.product.id %></td>
             <td><%= link_to payment.product.name , product_path(payment.product) %></td>  
-            <td><%= payment.paymentMethod.byteslice(19..-3)  %></td>  
+            <td><%= payment.paymentMethod %></td>  
             <td><%= payment.price %></td> 
             <td><%= payment.created_at %></td>   
         </tr>

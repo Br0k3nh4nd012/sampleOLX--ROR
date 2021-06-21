@@ -27,7 +27,10 @@
       <%= form.text_area :address ,  class:"form-control"%>
     </div>
 
-    <div class="actions" style="margin-top:40px">
-      <%= form.submit "Update Profile",class:"btn btn-success "%>
+    <div style="display:flex; margin-top:40px">
+      <div class="actions" style="margin-right:10px">
+        <%= form.submit "Update Profile",class:"btn btn-success a-btn"%>
+      </div>
+      <div><%= link_to "Cancel" , view_profile_path(profile), class:"btn btn-light"%></div>
     </div>
   <% end %>

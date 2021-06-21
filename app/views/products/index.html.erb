@@ -3,9 +3,9 @@
   <% if current_user.name==nil || current_user.mobNumber==nil  %>
   <h4 class="profileAlert">Please set up your profile for a better experience<%= link_to "Update Profile" , edit_profile_path(current_user) , class:"btn btn-light" %></h4>
 <%end%>
-
   <h3>Products</h3>
-  <div style="float:right"><%= link_to 'New Product', new_product_path , class:"newProd"%></div>
+  <%= render 'filterForm' %>
+  <div style="float:right"><%= link_to 'New Product', new_product_path , class:"btn btn-success a-btn"%></div>
 <% @products.each do |product| %>
   <% if !product.soldOut %>
   <div class="card w-50">
@@ -23,7 +23,7 @@
             <% end %>
           
           <br>
-          <%= link_to "show more" , product , class:"detailsbtn" %>
+          <%= link_to 'show more' , product ,class:"btn btn-info a-btn" %>
         </div>
         <div>
         <%= image_tag "for_sale.jpg" , class:"image"%>

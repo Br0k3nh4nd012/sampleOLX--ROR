@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  before_action :checkLogin
+  before_action :authenticate_user!
 
 
   def index
@@ -24,9 +24,12 @@ class PaymentsController < ApplicationController
       @prod = Product.find(params[:product_id])
       # @prod.buyerId = @payment.user.id
       # @prod.soldOut = true
-      @prod.update(buyerId: @payment.user.id , soldOut: true)
-      redirect_to product_payment_path(product_id: @payment.product , id: @payment)
+      if @prod.update(buyerId: @payment.user.id , soldOut: true)
+        flash[:notice] = "Product Updated successfully!!"
+        redirect_to product_payment_path(product_id: @payment.product , id: @payment)
+      end
     else
+      flash[:alert] = "Payment failed!!"
       redirect_to new_product_payment_path(params[:product_id])
     end
 
@@ -38,11 +41,12 @@ class PaymentsController < ApplicationController
       params.require(:payment).permit(:paymentMethod)
     end
 
-    def checkLogin
-      if current_user
-        return true
-      else
-        redirect_to root_path
-      end
-    end
+    # def checkLogin
+    #   if current_user
+    #     return true
+    #   else
+    #     flash[:alert] = "Unauthorized access.Login Required."
+    #     redirect_to root_path
+    #   end
+    # end
 end

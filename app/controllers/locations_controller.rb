@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
-  respond_to :html , :json
-  before_action :checkLogin
+  
+  before_action :authenticate_user!
 
 
   def index
@@ -15,8 +15,10 @@ class LocationsController < ApplicationController
     # @location.product_id = @@productId
     # respond_to do |format|
       if @location.save
+        flash[:notice] = "Location updated Successfully!!"
         redirect_to root_path 
       else
+        flash[:alert] = "Invalid Inputs!!"
         render 'new'
       end
     # end
@@ -28,8 +30,10 @@ class LocationsController < ApplicationController
   def update
     @location = Product.find(params[:product_id]).location
     if @location.update(location_params)
-      redirect_to @location.product
+      flash[:notice] = "Location Updated Successfully.!!"
+      redirect_to @location.locatable
     else
+      flash[:alert] = "Invalid Inputs!!"
       render 'edit'
     end
   end
@@ -39,11 +43,12 @@ private
     params.require(:location).permit(:city, :state, :country, :postalCode)
   end
 
-  def checkLogin
-    if current_user
-      return true
-    else
-      redirect_to root_path
-    end
-  end
+  # def checkLogin
+  #   if current_user
+  #     return true
+  #   else
+  #     flash[:alert] = "Unauthorized access.Login Required."
+  #     redirect_to root_path
+  #   end
+  # end
 end

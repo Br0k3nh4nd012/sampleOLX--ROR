@@ -1,19 +1,35 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
-  before_action :checkLogin, only: %i[ index show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ index show edit update destroy ]
   before_action :checkUser, only: %i[ edit ]
 
   # GET /products or /products.json
   def index
-
+    
     if current_user.isAdmin 
-      redirect_to admin_home_path
+      redirect_to ad_home_path
     else
       # @products = Product.all.where.not(user_id: current_user.id )
-      @products = Product.other_products(current_user)
+
+      if params[:category] && params[:category] != 'All categories'
+          @products = Product.where(category: params[:category]).where.not(user_id:current_user.id)
+      else
+        @products = Product.other_products(current_user)
+
+      end
+      if params[:location]
+        @locproducts = []
+          if params[:location] != 'All Location(city)'
+            @products.each do |prod| 
+              if prod.location.city == params[:location] 
+                @locproducts.push(prod)
+              end
+            end
+            @products = @locproducts
+          end
+      end
     end
   end
-
   # GET /products/1 or /products/1.json
   def show
     session[:prod_id] = params[:id]
@@ -87,22 +103,23 @@ class ProductsController < ApplicationController
     end
 
     #check for is logged in
-    def checkLogin
-      if current_user
-        return true
-      else
-        redirect_to new_user_session_path
-      end
-    end
+    # def checkLogin
+    #   if current_user
+    #     return true
+    #   else
+    #     flash[:alert] = "Unauthorized access.Login Required."
+    #     redirect_to new_user_session_path
+    #   end
+    # end
 
     def checkUser
       if current_user == Product.find(params[:id]).user
         return true
       else
+        flash[:alert] = "Unauthorized access."
         redirect_to view_profile_path(current_user)
       end
     end
-
 
     # Only allow a list of trusted parameters through.
     def product_params
