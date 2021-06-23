@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # <div style="float:right"><%= link_to 'New Product', new_product_path , class:"newProd"%></div>
@@ -41,4 +42,20 @@ Rails.application.routes.draw do
   get 'ad/payments', to: 'admins#payments', as: 'ad_payments'
   get 'ad/new_user', to: 'admins#newUser', as: 'ad_new_user'
   post 'ad/create_user' , to: 'admins#createUser', as: 'ad_create_user'
+
+
+  # API routes--------------------------------------------
+  namespace :api do
+    namespace :v1 do
+      resources :users do
+        resources :products
+      end
+    end
+  end
+  # namespace :api, defaults: { format: 'json' } do
+  #   namespace :v1 do
+  #     resources :products 
+  #   end
+  # end
+
 end

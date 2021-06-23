@@ -6,13 +6,13 @@ ActiveAdmin.register Payment do
   # Uncomment all parameters which should be permitted for assignment
   #
   permit_params :paymentMethod, :user_id, :product_id
+ 
 
-includes :product
 index do
   selectable_column
   column :id
   column :paymentMethod
-  column "Price"  do |payment|
+  column :price  do |payment|
     payment.product.price
   end
   column :user
