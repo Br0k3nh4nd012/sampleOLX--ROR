@@ -18,7 +18,6 @@ class PaymentsController < ApplicationController
   def create 
     @payment = current_user.payments.new
     @payment.paymentMethod = payment_params
-    @payment.price = Product.find(params[:product_id]).price
     @payment.product_id = params[:product_id]
     if @payment.save 
       @prod = Product.find(params[:product_id])
