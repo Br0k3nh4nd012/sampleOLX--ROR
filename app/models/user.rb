@@ -21,6 +21,14 @@ class User < ApplicationRecord
   # validates :mobNumber , presence: true
   # validates :address , presence: true
 
+  #doorkeeper=---------------------
+  def self.authenticate(email, password)
+    user = User.find_for_authentication(email: email)
+    user&.valid_password?(password) ? user : nil
+  end
+
+
+
   #callbacks-----------------------
 
   before_create do

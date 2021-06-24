@@ -1,7 +1,9 @@
 class Api::V1::ProductsController < ActionController::API
 
+    before_action :doorkeeper_authorize!
+
     def index
-        @products = User.find(params[:user_id]).products
+        @products = User.find_by(id: doorkeeper_token[:resource_owner_id]).products
         render json:  @products 
     end
 
@@ -42,6 +44,10 @@ class Api::V1::ProductsController < ActionController::API
     private
     def product_params
         params.permit(:name,:category,:description,:price)
+    end
+
+    def current_user
+        @current_user ||= User.find_by(id: doorkeeper_token[:resource_owner_id])
     end
 end
 
