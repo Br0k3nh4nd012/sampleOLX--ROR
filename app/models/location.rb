@@ -6,6 +6,13 @@ class Location < ApplicationRecord
   validates :postalCode, format: { with: /\A[0-9]+\z/,
   message: "only allows digits" }
 
+ 
+
+  scope :in_location , ->(loc) { where("city == ?" , loc)}
+
+
+
+
   before_create :checkProduct
   def checkProduct
     if self.locatable_type=='Product'

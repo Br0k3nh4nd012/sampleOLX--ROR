@@ -46,17 +46,14 @@ Rails.application.routes.draw do
 
   # API routes--------------------------------------------
   namespace :api do
-    namespace :v1 do
-      resources :users do
+    namespace :v1 do      
         resources :products
-      end
+              
     end
   end
-  # namespace :api, defaults: { format: 'json' } do
-  #   namespace :v1 do
-  #     resources :products 
-  #   end
-  # end
+
+  get 'api/v1/my_products' , to: 'api/v1/products#myProducts' , as: 'api_v1_myProducts'
+
 
   use_doorkeeper do
     skip_controllers :authorizations, :applications, :authorized_applications

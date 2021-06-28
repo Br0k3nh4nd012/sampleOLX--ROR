@@ -5,9 +5,11 @@ class Product < ApplicationRecord
   #scopes--------------
   default_scope { order(created_at: :asc) }
   scope :other_products , ->(current_user) { where("user_id != ?" , current_user.id)}
+  
+  
 
   #validations-----------------
-  validates :name ,:category, :description, :price,  presence: true
+  validates :name ,:category, :description, :price ,:user_id ,presence: true
   validates :price , numericality: { greater_than: 0 }
   # validates :soldOut, exclusion: [nil]
 

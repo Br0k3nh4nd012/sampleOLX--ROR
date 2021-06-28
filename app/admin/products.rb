@@ -21,8 +21,17 @@ index do
   column :updated_at
 end
 
+
 filter :user 
-filter :location, as: :select , collection: ['chennai']
+filter :location , :collection => proc {(Location.all).map{|l| [l.city, l.id]}}
+filter :soldOut , as: :check_boxes
+filter :category , as: :select , collection: ['mobiles','laptops','home appliances','vehicles','books','sports equipment','electronics','other gadgets','other']
+filter :price
+filter :name
+
+# filter :location , :collection => proc { Location.distinct.pluck :city }
+
+# filter :location,as: :select,collection: ['chennai','madurai','coimbatore','trichy','karur','kochi',] 
   # or
   #
   # permit_params do

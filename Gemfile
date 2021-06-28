@@ -6,7 +6,8 @@ gem 'devise'
 gem 'dotenv-rails'
 gem 'activeadmin'
 gem 'doorkeeper', '~> 5.4.0'
-gem 'rspec-rails' , '~> 4.0.1'
+
+gem 'factory_girl_rails', "~> 4.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 # Use postgresql as the database for Active Record
@@ -36,6 +37,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails' , '~> 4.0.1'
 end
 
 group :development do

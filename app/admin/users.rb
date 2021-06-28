@@ -8,6 +8,17 @@ ActiveAdmin.register User do
   permit_params :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :name, :mobNumber, :address, :isAdmin
   
 
+index do
+  column :email
+  column :name
+  column :mobNumber , label: 'Mobile Number'
+  column :address
+  column :isAdmin
+  actions
+end
+
+preserve_default_filters!
+filter :product
 
   # or
   #

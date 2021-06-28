@@ -12,7 +12,7 @@ index do
   selectable_column
   column :id
   column :paymentMethod
-  column :price  do |payment|
+  column :amount  do |payment|
     payment.product.price
   end
   column :user

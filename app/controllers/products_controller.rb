@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[ index show edit update destroy ]
+  before_action :authenticate_user!
   before_action :checkUser, only: %i[ edit ]
 
   # GET /products or /products.json
@@ -56,9 +56,10 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save 
+        # format.json { render json: "Product was successfully created.", status: :created, location: @product }
+        format.json { render json: { success: true }}
+        format.html { redirect_to new_product_location_path(@product),status: :created, notice: "Product was successfully created." }
         
-        format.html { redirect_to new_product_location_path(@product), notice: "Product was successfully created." }
-        format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -87,11 +88,11 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      if current_user.isAdmin
+      if !current_user.isAdmin
         format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
       else
-        format.html { redirect_to admin_products_url, notice: "Product was successfully destroyed." }
-      format.json { head :no_content }
+        format.html { redirect_to ad_products_url, notice: "Product was successfully destroyed." }
+        format.json { head :no_content }
       end
     end
   end
