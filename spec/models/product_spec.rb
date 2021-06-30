@@ -2,40 +2,45 @@ require 'rails_helper'
 
 RSpec.describe 'Product' ,type: :model do
     context 'validations' do
-        before {@user = User.create!(email:'gok@gmail.com',password:'password',password_confirmation:'password')}
+        before {@user = create(:user)}
         it 'should save successfully' do
-            prod = @user.products.new(name:'product name',category: 'other',description: 'rspec',price: 200)
+            # prod = @user.products.new(name:'product name',category: 'other',description: 'rspec',price: 200)
             # expect { prod.save! }.to raise_error(ActiveRecord::RecordInvalid) 
+            prod = build(:product , user_id: @user.id)
             expect(prod.save).to eq true
         end
         it 'should not save, name missing!' do
-            # user = User.create!(params)
-            prod = @user.products.new(category: 'other',description: 'rspec',price: 200)
+            # prod = @user.products.new(category: 'other',description: 'rspec',price: 200)
+            prod = build(:product , user_id: @user.id, name: '')
             expect(prod.save).to eq false
         end
         it 'should not save, category missing!' do
-            prod = @user.products.new(name:'productname',description: 'rspec',price: 200)
+            # prod = @user.products.new(name:'productname',description: 'rspec',price: 200)
+            prod = build(:product , user_id: @user.id, category: '')
             expect(prod.save).to eq false
         end
         it 'should not save, price missing!' do
-            prod = @user.products.new(name:'product name',category: 'other',description: 'rspec')
+            # prod = @user.products.new(name:'product name',category: 'other',description: 'rspec')
+            prod = build(:product , user_id: @user.id, price: nil)
             expect(prod.save).to eq false
         end
         it 'should not save, price invalid!' do
-            prod = @user.products.new(name:'product name',category: 'other',description: 'rspec',price:-20)
+            # prod = @user.products.new(name:'product name',category: 'other',description: 'rspec',price:-20)
+            prod = build(:product , user_id: @user.id, price: -20)
             expect(prod.save).to eq false
         end
     end
 
     context 'testing scopes' do
-        let(:user1) {User.create!(email:'gok@gmail.com',password:'password',password_confirmation:'password')}
-        let(:user2) {User.create!(email:'kri@gmail.com',password:'password',password_confirmation:'password')}
+        let(:user1) {create(:user)}
+        let(:user2) {create(:user , email:'kri@gmail.com')}
         before do
-            user1.products.new(name:'product 1',category: 'other',description: 'rspec',price:200).save
-            user1.products.new(name:'product 2',category:'mobile',description: 'rspec',price:208).save
-            user1.products.new(name:'product 3',category: 'other',description: 'rspec',price:120).save
-            user2.products.new(name:'product 4',category: 'laptop',description: 'rspec',price:120).save
-            user2.products.new(name:'product 4',category: 'other',description: 'rspec',price:120).save
+            # create(:product , user_id: user1.id)
+            # create(:product , user_id: user1.id)
+            # create(:product , user_id: user1.id)
+            create_list(:product , 3, user_id: user1.id)
+            create(:product , user_id: user2.id)
+            create(:product , user_id: user2.id)
         end
 
         it 'other products than products of current user' do
@@ -49,12 +54,3 @@ RSpec.describe 'Product' ,type: :model do
     
      
 end
-
-# RSpec.describe 'ProductsController' , type: :controller do
-#     context 'GET #index' do
-#             it 'returns a success responce' do 
-#                 get :index
-#                 expect(response).to be_success                
-#             end
-#         end
-# end

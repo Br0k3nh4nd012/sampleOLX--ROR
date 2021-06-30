@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :checkUser, only: %i[ edit ]
+  before_action :checkUser, only: %i[ edit  ]
 
   # GET /products or /products.json
   def index
@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
   # GET /products/1 or /products/1.json
   def show
     session[:prod_id] = params[:id]
-    @product = Product.find(params[:id])
+    @product = Product.includes(:location).find(params[:id])
     @location = @product.location
   end
 

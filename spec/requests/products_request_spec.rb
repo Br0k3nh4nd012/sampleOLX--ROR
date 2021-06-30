@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'ProductsController', type: :request do
     before do
-        @user = User.create!(email:'gok@gmail.com',password:'password',password_confirmation:'password')
+        @user = create(:user)
     end
 
     let(:prod1) do 
@@ -19,7 +19,7 @@ RSpec.describe 'ProductsController', type: :request do
             get products_path
             expect(response.status).to eq(200)         
         end
-        it 'not returns a success response if not auth' do               
+        it 'not returns a success response if not auth' do          
             get products_path
             expect(response.status).not_to eq(200)         
         end
@@ -28,12 +28,14 @@ RSpec.describe 'ProductsController', type: :request do
     context 'GET #show' do
         it 'returns a success response' do
             sign_in @user
-            prod = @user.products.create(prod1)
+            # prod = @user.products.create(prod1)
+            prod = create(:product , user_id: @user.id)
             get product_path(prod)
             expect(response).to be_successful
         end
         it 'not returns a success response if not auth' do
-            prod = @user.products.create(prod1)
+            # prod = @user.products.create(prod1)
+            prod = create(:product , user_id: @user.id)
             get product_path(prod)
             expect(response).not_to be_successful
         end
@@ -51,9 +53,18 @@ RSpec.describe 'ProductsController', type: :request do
     context 'POST #create' do
         it 'creates a product successfully' do
             sign_in @user          
-            
             post products_path , params: { product: prod1 }
             expect(response).to be_successful
+        end
+    end
+
+    context 'GET #edit' do
+        it 'renders edit page success' do
+            sign_in @user
+            allow(controller).to receive(:checkUser) {true}
+            prod = create(:product , user_id: @user.id )
+            get edit_product_path(prod)
+            expect(response.status).to eq(200)
         end
     end
 
@@ -61,7 +72,8 @@ RSpec.describe 'ProductsController', type: :request do
     context 'PUT #update' do
         it 'updates a product successfully' do
             sign_in @user
-            prod = @user.products.create(prod1)
+            # prod = @user.products.create(prod1)
+            prod = create(:product , user_id: @user.id )
             put product_path(prod), params: { product: prod1_updated }            
             expect(response).to redirect_to(@prod)
         end
