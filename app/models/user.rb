@@ -6,8 +6,10 @@ class User < ApplicationRecord
 
   default_scope { order(created_at: :asc) }
 
-  has_many :products , dependent: :destroy
+  has_many :products , class_name:"Product", dependent: :destroy
   has_many :payments , dependent: :destroy
+  has_many :favourites
+  has_many :favourite_products ,  through: :favourites , source: :product
 
   validates :mobNumber, length: { is: 10 ,message: "Enter a valid Mobile Number" },on: :update
   # validates :mobNumber, format: { with: /\A[0-9]+\z/ message: "only allows digits" }

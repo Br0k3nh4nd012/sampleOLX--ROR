@@ -7,6 +7,7 @@ class ProfilesController < ApplicationController
     @user = User.find(params[:id])
     @myProducts = @user.products.includes(:location)
     @purchasedProduct = Product.includes(:payment).where(buyerId: @user.id).order(updated_at: :asc)
+    @favProducts = @user.favourite_products
   end
   
   # get '/profile/edit/:id' , to: 'profiles#edit' , as: 'edit_profile'

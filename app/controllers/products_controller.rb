@@ -37,6 +37,28 @@ class ProductsController < ApplicationController
   end
 
 
+  #POST /product/favourite/:id
+  def addFavourites
+    @favourite = current_user.favourites.new(product_id:params[:id])
+    if @favourite.save
+      flash[:notice] = "favourite added!!"
+      redirect_to root_path
+    else
+      flash[:alert] = "favourite not added!!"
+      redirect_to root_path
+    end
+  end
+  # POST /product/favourite/:id
+  def removeFavourites
+    @favourite = current_user.favourites.find_by(product_id:params[:id])
+    if @favourite.destroy
+      flash[:notice] = "favourite removed"
+      redirect_to root_path
+    else
+      flash[:alert] = "favourite not removed!!"
+      redirect_to root_path
+    end
+  end
 
 
   # GET /products/1 or /products/1.json

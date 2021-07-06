@@ -1,4 +1,9 @@
 FactoryBot.define do
+  factory :favourite do
+    user { nil }
+    product { nil }
+  end
+
     factory :user do
         email { 'gok@gmail.com' }
         password { 'password' }

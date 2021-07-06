@@ -13,6 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
  body{
      margin: 0% 0%;
      /* background-color: rgb(134, 233, 233); */
@@ -153,4 +157,28 @@
 }
 .a-btn:visited{
     color: azure;
+}
+
+.icon-heart-notfav{
+    padding: 8px;
+    background-color: gray;
+    border-radius: 20px;
+}
+.icon-heart-notfav:hover{
+    background-color: red;
+}
+.icon-heart-fav{
+    padding: 8px;
+    background-color: red;
+    border-radius: 20px;
+}
+.icon-heart-fav:hover{
+    background-color: gray;
+}
+.icon{ 
+    margin-bottom:15px;
+    text-align:right;
+}
+.collapsebtn{
+    margin-bottom: 20px;
 }

@@ -17,6 +17,13 @@
             <%= link_to 'show more' , product ,class:"btn btn-info a-btn" %>
           </div>
           <div>
+          <div class="icon">
+          <% if product.favProduct(current_user) %>
+            <%= link_to icon('fas', 'heart') ,remove_favourites_path(product) ,:method => :post, class: "icon-heart-fav"%>
+          <%else%>
+            <%= link_to icon('fas', 'heart') ,add_favourites_path(product) ,:method => :post, class: "icon-heart-notfav"%>
+          <% end %>
+          </div>
           <%= image_tag "for_sale.jpg" , class:"image"%>
           </div>
         </div>

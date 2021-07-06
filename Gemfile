@@ -7,6 +7,7 @@ gem 'dotenv-rails'
 gem 'activeadmin'
 gem 'doorkeeper', '~> 5.4.0'
 gem 'simple_form'
+gem 'font-awesome-sass', '~> 5.15.1'
 # gem 'factory_girl_rails', "~> 4.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'

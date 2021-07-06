@@ -1,0 +1,24 @@
+<table class="table" style="background-color:azure">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% purchasedProduct.each do |product| %>
+        <tr>
+            <td><%= link_to product.name  , product%></td>
+            <td><%= product.category %></td>
+            <td><%= product.description %></td>
+            <td><%= product.price %></td>   
+            <td><%= link_to 'Payment details', product_payment_path(product_id: product.id , id: product.payment) , class:"btn-sm btn-info a-btn"%></td>
+        </tr>
+      
+    <% end %>
+  </tbody>
+</table>
