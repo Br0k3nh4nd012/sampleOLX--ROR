@@ -24,9 +24,9 @@
         <tr>
             <td><%= payment.id %></td>
             <td><%= link_to payment.user.id%></td>
-            <td><%= link_to payment.user.name , view_profile_path(payment.user)%></td>
+            <td><%= link_to payment.user.name , profile_path(payment.user)%></td>
             <td><%= payment.product.user.id %></td>
-            <td><%= link_to payment.product.user.name , view_profile_path(payment.product.user)%></td>
+            <td><%= link_to payment.product.user.name , profile_path(payment.product.user)%></td>
             <td><%= payment.product.id %></td>
             <td><%= link_to payment.product.name , product_path(payment.product) %></td>  
             <td><%= payment.paymentMethod %></td>  

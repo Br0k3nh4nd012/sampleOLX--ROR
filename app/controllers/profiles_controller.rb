@@ -3,26 +3,24 @@ class ProfilesController < ApplicationController
   before_action :checkUser , only: %i[ edit , create , destroy ]
 
 
-  def index
+  def show
     @user = User.find(params[:id])
-    @myProducts = @user.products
-    @purchasedProduct = Product.where(buyerId: @user.id)
+    @myProducts = @user.products.includes(:location)
+    @purchasedProduct = Product.includes(:payment).where(buyerId: @user.id).order(updated_at: :asc)
   end
   
   # get '/profile/edit/:id' , to: 'profiles#edit' , as: 'edit_profile'
   def edit
-    # @profile = current_user
     @profile = User.find(params[:id])
-    @@profile_id = params[:id]
   end
 
-  # patch '/profile/edit' , to: 'profiles#update', as: 'update_profile' 
+  # patch '/profile/update' , to: 'profiles#update', as: 'update_profile' 
   def update
-    @profile = User.find(@@profile_id)
+    @profile = User.find(params[:id])
     
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to view_profile_path(@profile) }
+        format.html { redirect_to profile_path(@profile) }
       else
         flash[:alert] = "unable to update. Please check the data."
         format.html { render 'edit' }
@@ -34,7 +32,7 @@ class ProfilesController < ApplicationController
     @user = User.find(params[:id])
     if @user.destroy
       flash[:notice] = "User destroyed Successfully!!"
-      redirect_to admin_users_path
+      redirect_to ad_users_path
     end
   end
 

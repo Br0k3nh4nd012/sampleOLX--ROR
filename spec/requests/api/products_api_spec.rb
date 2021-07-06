@@ -6,8 +6,8 @@ RSpec.describe 'Api::V1::ProductsController', type: :request do
     let(:access_token) { Doorkeeper::AccessToken.create!(application: oath_app) }
     let(:authorization) { "Bearer #{access_token.token}" }
     before do
-        @user = User.create!(email:'gok@gmail.com',password:'password',password_confirmation:'password')
-        @product = @user.products.create!(name:'product 1',category: 'other',description: 'rspec',price:200)
+        @user = create(:user)
+        @product = create(:product , user_id: @user.id)
     end
     
     let(:prod1) do 

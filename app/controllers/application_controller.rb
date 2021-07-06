@@ -9,4 +9,17 @@ class ApplicationController < ActionController::Base
     def set_current_user
       User.current = current_user
     end
+
+
+    def validUser
+      begin 
+        if current_user == Product.find(params[:id]).user || current_user.isAdmin        
+          return true
+        else        
+          return false
+        end
+      rescue ActiveRecord::RecordNotFound => e
+        puts e
+      end
+    end
 end

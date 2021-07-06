@@ -32,7 +32,7 @@
       <%if current_user %>
         <nav class="navbarMine">
           <div style="display:flex">
-            <h3 style="padding:10px">Olx</h3>
+            <h3 style="padding:10px">O-el-X</h3>
             <%= link_to "Home" , root_path , class:"signOutText"%>
             <% if current_user.isAdmin %>
               <%= link_to "Users" , ad_users_path , class:"signOutText"%>
@@ -40,9 +40,17 @@
               <%= link_to "Payments" , ad_payments_path , class:"signOutText"%>
             <% end %>
           </div>
+          <div>
+          <%= simple_form_for :search ,url: searched_products_path  do |f| %>
+            <div style="display:flex; padding-top:20px; width:400px">
+              <%= f.input_field :value %>
+              <%= f.button :submit , "search", style:'margin-left:15px' %>
+            </div>
+          <% end %>
+          </div>
           <div style="display:flex">
             <h5 style="padding:15px"><%=current_user.name%></h5>
-            <%= link_to "profile" , view_profile_path(current_user) , class:"signOutText"%>
+            <%= link_to "profile" , profile_path(current_user) , class:"signOutText"%>
             <%= link_to "Sign out" , destroy_user_session_path , method: :delete , class:"signOutText"%>
           </div>
         </nav>

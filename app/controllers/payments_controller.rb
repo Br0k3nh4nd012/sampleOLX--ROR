@@ -10,7 +10,7 @@ class PaymentsController < ApplicationController
     @payment = @product.payment
   end
   def new
-    @prod= Product.includes(:payment).find(params[:product_id])
+    @prod= Product.find(params[:product_id])
     @price = @prod.price
     @payment = current_user.payments.new
   end

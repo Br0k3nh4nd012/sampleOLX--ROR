@@ -1,0 +1,6 @@
+<%= simple_form_for :search ,url: searched_products_path  do |f| %>
+  <div style="display:flex; padding-top:20px; width:400px">
+    <%= f.input_field :value %>
+    <%= f.button :submit , "search", style:'margin-left:15px' %>
+  </div>
+<% end %>

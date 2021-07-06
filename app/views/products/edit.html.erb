@@ -1,10 +1,8 @@
 <h1>Editing Product</h1>
 
-<% if @user.address.length > 0 %>
+
     <%= render 'form', product: @product %>
-<% else %>
-    <h2>Your Profile is invalid.Please <%= link_to "Update" , edit_profile_path(@user) , class:"btn btn-success a-btn"%></h2>
-<% end %>
+
 
 <%= link_to 'Show', @product %> |
 <%= link_to 'Back', products_path %>

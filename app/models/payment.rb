@@ -14,8 +14,6 @@ class Payment < ApplicationRecord
 
     def updateProduct
       prod = self.product
-      # prod.buyerId = self.user.id
-      # prod.soldOut = true
       prod.update(buyerId: self.user.id , soldOut: true)
     end
 

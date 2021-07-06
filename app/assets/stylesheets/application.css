@@ -96,11 +96,18 @@
 .image-login{
     height: 480px;
     width: 650px;
+    
 }
 .image-lg{
     height: 300px;
     width: 400px;
 }
+.emptyItems{
+    text-align: center;
+    justify-content: center;
+    margin-top: 8%;
+}
+
 .myCard{
     display: flex;
     justify-content: space-between;
@@ -109,6 +116,7 @@
     display: flex;
     justify-content: space-between;
     height: 100%;
+    padding: 50px 100px;
 }
 .newProd{
     padding: 16px;
@@ -134,10 +142,7 @@
     height: 50px;
 }
 .filterBar{
-    display: flex;
-
-    /* justify-content: space-between; */
-    
+    display: flex;    
     align-items: center;
     padding: auto 20px;
     margin-bottom: 20px;
