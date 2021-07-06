@@ -7,11 +7,13 @@ class LocationsController < ApplicationController
   end
   def new
     @location = Location.new
-    @productId = params[:product_id]
-    # @locerrors = @location.errors
   end
   def create
-    @location = Product.find(params[:product_id]).build_location(location_params)
+
+    @location = Product.find(params[:product_id]).build_location(postalCode: location_params[:postalCode])
+    @location.city = City.find_by(cityName: location_params[:city])
+    @location.state = State.find_by(stateName: location_params[:state])
+    @location.country = Country.find_by(countryName: location_params[:country])
       if @location.save
         flash[:notice] = "Location updated Successfully!!"
         redirect_to root_path 

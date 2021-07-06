@@ -1,4 +1,20 @@
 FactoryBot.define do
+  factory :category do
+    category { "MyString" }
+  end
+
+  factory :country do
+    countryName { "MyString" }
+  end
+
+  factory :state do
+    stateName { "MyString" }
+  end
+
+  factory :city do
+    cityName { "MyString" }
+  end
+
   factory :favourite do
     user { nil }
     product { nil }

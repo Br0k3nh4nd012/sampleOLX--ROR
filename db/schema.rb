@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_072026) do
+ActiveRecord::Schema.define(version: 2021_07_06_134129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,24 @@ ActiveRecord::Schema.define(version: 2021_07_06_072026) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "category"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "cityName"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "countryName"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "favourites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "product_id", null: false
@@ -51,15 +69,18 @@ ActiveRecord::Schema.define(version: 2021_07_06_072026) do
   end
 
   create_table "locations", force: :cascade do |t|
-    t.string "city"
-    t.string "state"
-    t.string "country"
     t.integer "postalCode"
-    t.bigint "locatable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "locatable_type"
-    t.index ["locatable_id"], name: "index_locations_on_locatable_id"
+    t.bigint "city_id", null: false
+    t.bigint "state_id", null: false
+    t.bigint "country_id", null: false
+    t.string "locatable_type", null: false
+    t.bigint "locatable_id", null: false
+    t.index ["city_id"], name: "index_locations_on_city_id"
+    t.index ["country_id"], name: "index_locations_on_country_id"
+    t.index ["locatable_type", "locatable_id"], name: "index_locations_on_locatable"
+    t.index ["state_id"], name: "index_locations_on_state_id"
   end
 
   create_table "oauth_access_tokens", force: :cascade do |t|
@@ -102,7 +123,6 @@ ActiveRecord::Schema.define(version: 2021_07_06_072026) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "category"
     t.text "description"
     t.integer "price"
     t.integer "buyerId"
@@ -111,6 +131,12 @@ ActiveRecord::Schema.define(version: 2021_07_06_072026) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string "stateName"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -131,7 +157,9 @@ ActiveRecord::Schema.define(version: 2021_07_06_072026) do
 
   add_foreign_key "favourites", "products"
   add_foreign_key "favourites", "users"
-  add_foreign_key "locations", "products", column: "locatable_id"
+  add_foreign_key "locations", "cities"
+  add_foreign_key "locations", "countries"
+  add_foreign_key "locations", "states"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "payments", "products"
   add_foreign_key "payments", "users"

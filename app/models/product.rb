@@ -2,11 +2,16 @@ class Product < ApplicationRecord
   belongs_to :user
   has_one :payment , dependent: :destroy
   has_one :location ,as: :locatable, dependent: :destroy
-
+  # belongs_to :location
   has_many :favourites
   has_many :users , through: :favourites
 
-
+def location_city
+  location.city.cityName
+end
+def location_state
+  location.state.stateName
+end
 
 
   #scopes--------------
