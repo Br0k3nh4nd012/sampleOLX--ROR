@@ -12,8 +12,6 @@ class LocationsController < ApplicationController
   end
   def create
     @location = Product.find(params[:product_id]).build_location(location_params)
-    # @location.product_id = @@productId
-    # respond_to do |format|
       if @location.save
         flash[:notice] = "Location updated Successfully!!"
         redirect_to root_path 

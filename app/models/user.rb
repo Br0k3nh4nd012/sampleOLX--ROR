@@ -10,10 +10,9 @@ class User < ApplicationRecord
   has_many :payments , dependent: :destroy
 
   validates :mobNumber, length: { is: 10 ,message: "Enter a valid Mobile Number" },on: :update
-  # validates :mobNumber, format: { with: /\A[0-9]+\z/,
-  #   message: "only allows digits" }
-    # or 
-  validates :mobNumber, numericality: {  message: "only allows digits"}, uniqueness: true ,on: :update
+  # validates :mobNumber, format: { with: /\A[0-9]+\z/ message: "only allows digits" }
+
+  validates :mobNumber, numericality: {  message: "only allows digits"},on: :update
   # validates :mobNumber, uniqueness: true ,on: :update
   validates :name , :address , length: { minimum: 3 , message: "Enter a valid %{attribute}"} ,on: :update
   # validates :mobNumber , presence: true
@@ -37,7 +36,7 @@ class User < ApplicationRecord
 
   before_update :makeCapital
   def makeCapital
-    self.name = name.capitalize
+    self.name = name.capitalize if !self.name.blank?
     self.address = address.capitalize
   end
 

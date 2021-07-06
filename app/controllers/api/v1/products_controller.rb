@@ -3,7 +3,12 @@ class Api::V1::ProductsController < ActionController::API
     before_action :doorkeeper_authorize!
 
     def index
-        @products = User.find_by(id: doorkeeper_token[:resource_owner_id]).products
+        @products = Product.all
+        render json:  @products 
+    end
+
+    def myProducts
+        @products = User.find_by(current_user).products
         render json:  @products 
     end
 
@@ -15,7 +20,7 @@ class Api::V1::ProductsController < ActionController::API
 
     # /api/v1/users/:user_id/products
     def create
-        @product = User.find(params[:user_id]).products.new(product_params)
+        @product = User.find_by(current_user).products.new(product_params)
         if @product.save
             render json: @product
         else
@@ -28,7 +33,7 @@ class Api::V1::ProductsController < ActionController::API
         if @product.update(product_params)
             render json: @product
         else
-            render error: { error: "Unable to create Product!!"}, status: 400
+            render error: { error: "Unable to update Product!!"}, status: 400
         end
     end
     
@@ -50,68 +55,3 @@ class Api::V1::ProductsController < ActionController::API
         @current_user ||= User.find_by(id: doorkeeper_token[:resource_owner_id])
     end
 end
-
-# module Api
-#     module V1
-#         class ProductsController < ApplicationController
-#             protect_from_forgery with: :null_session
-#             respond_to :json
-
-#             def index
-#             respond_with Product.all
-#             end
-
-#             def create
-      
-#                 puts "oeihheoihroierhoiehoiwihow
-              
-              
-#                 #{params}
-              
-#                oegruegriuwegriueg "
-              
-#               respond_with Product.create(product_params)
-              
-#               end  
-              
-#               def show
-#                 respond_with Product.find(params[:id])
-#               end  
-              
-#               def destroy
-#                 if Product.find_by(id: params[:id]).nil?
-#                   respond_with "Cant find the data"
-#                 else
-#                   respond_with Product.find(params[:id]).destroy
-#                 end
-#               end
-              
-              
-#               def update
-#                 product=Product.find(params[:id])
-#                 product.update(name:params[:name])
-#                 puts "kfuugu
-#                 fyfyfy
-#                 ifyiyf"
-              
-              
-#                 puts product.errors.full_messages
-#               end  
-              
-#               private 
-#               def  product_params
-#                 res={}
-#                 res[:name] = params[:name]
-#                 res[:category]=params[:category]
-#                 res[:description]=params[:description]
-#                 res[:user_id]=params[:user_id]
-#                 res[:price]=params[:price]
-#                 return res
-#               end 
-
-            
-        
-
-#         end
-#     end
-# end

@@ -6,34 +6,12 @@
   <h3>Products</h3>
   <%= render 'filterForm' %>
   <div style="float:right"><%= link_to 'New Product', new_product_path , class:"btn btn-success a-btn"%></div>
-<% @products.each do |product| %>
-  <% if !product.soldOut %>
-  <div class="card w-50">
-    <div class="card-body">
-      <div class="myCard">
-        <div>
-          <h5 class="card-title"><strong><%=product.name%></strong></h5>
-          <h6 class="card-text"><strong>id: </strong> <%=product.id%></h6>
-          <h6 class="card-text"><strong>category: </strong> <%=product.category%></h6>
-          <h6 class="card-text"><strong>Price: </strong> <%=product.price%></h6>
-          <%if product.location%>
-              <h6 class="card-text"><strong>Location: </strong> <%=product.location.city%></h6>
-            <%else%>
-              <%= %>              
-            <% end %>
-          
-          <br>
-          <%= link_to 'show more' , product ,class:"btn btn-info a-btn" %>
-        </div>
-        <div>
-        <%= image_tag "for_sale.jpg" , class:"image"%>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-  <% end %>
+
+  <% if !@products.blank? %>
+  <%= render 'cardEachItem' , products: @products %>
+<% else %>
+<div class="emptyItems">
+  <%= image_tag "new_empty.png" , class:"image-lg"%>
+  <h3 style="margin-top:20px; color:red">Nothing Found!!</h3>
+</div>
 <% end %>
-
-
-

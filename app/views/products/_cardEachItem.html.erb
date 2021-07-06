@@ -1,0 +1,27 @@
+<% products.each do |product| %>
+    <div class="card w-50">
+      <div class="card-body">
+        <div class="myCard">
+          <div>
+            <h5 class="card-title"><strong><%=product.name%></strong></h5>
+            <h6 class="card-text"><strong>id: </strong> <%=product.id%></h6>
+            <h6 class="card-text"><strong>category: </strong> <%=product.category%></h6>
+            <h6 class="card-text"><strong>Price: </strong> <%=product.price%></h6>
+            <%if product.location%>
+                <h6 class="card-text"><strong>Location: </strong> <%=product.location.city%></h6>
+              <%else%>
+                <%= %>              
+              <% end %>
+            
+            <br>
+            <%= link_to 'show more' , product ,class:"btn btn-info a-btn" %>
+          </div>
+          <div>
+          <%= image_tag "for_sale.jpg" , class:"image"%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  <% end %>
+  

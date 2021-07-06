@@ -33,7 +33,7 @@
             <% end %>
             <td><%= product.description %></td>
             <td><%= product.price %></td>  
-            <td><%= link_to product.user.name , view_profile_path(product.user)%></td>  
+            <td><%= link_to product.user.name , profile_path(product.user)%></td>  
             <td><%= product.updated_at %></td>  
             <% if product.soldOut %>
                 <td>Yes</td>    
@@ -41,7 +41,7 @@
                 <td>No</td>  
             <% end %>
             <% if product.payment %>
-              <td><%= link_to product.payment.user.name , view_profile_path(product.payment.user)%></td>  
+              <td><%= link_to product.payment.user.name , profile_path(product.payment.user)%></td>  
             <% else %>
               <td></td>
             <% end %>

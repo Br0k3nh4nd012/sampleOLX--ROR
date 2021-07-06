@@ -2,38 +2,25 @@ Rails.application.routes.draw do
   use_doorkeeper
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  # <div style="float:right"><%= link_to 'New Product', new_product_path , class:"newProd"%></div>
-  
-  get 'locations/index'
-  get 'profiles/index'
-  get 'payments/index'
+  devise_for :users
+
+  root 'products#index'
+
   resources :products do 
     resources :locations , only: [:new,:create , :edit , :update]
     resources :payments , only: [:new , :create , :show]
   end
-  devise_for :users
-  root 'products#index'
+
+  #searchbar routes-------------------
+  post '/products/searchedProducts' , to: 'products#searchedProducts' , as: 'searched_products'
+  get '/products/searchedProducts' , to: 'products#searchedProducts'
+
+  #filterBar route--------------------
   post '/' , to: 'products#index' , as: 'apply_filter'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  #payment routes---------------
-  get '/products/:id/payment' , to: 'payments#new' , as: 'do_payment'
-  post '/products/payment/:id' , to: 'payments#create' , as: 'create_payment'
-  get 'products/:id/paymentDetails' , to: 'payments#show' , as: 'view_payment_details'
 
   #profile routes----------------
-  get '/profile/:id' , to: 'profiles#index' , as: 'view_profile'
-  get '/profile/edit/:id' , to: 'profiles#edit' , as: 'edit_profile'
-  patch '/profile/edit' , to: 'profiles#update', as: 'update_profile' 
-  delete '/profile/delete/:id' , to: 'profiles#destroy' , as: 'destroy_profile'
-
-  #location routes-----------------
-  # get '/products/:id/location' , to: 'locations#new' , as: 'fill_location'
-  # post '/products/locationadd', to: 'locations#create' ,as: 'add_location'
-  # get '/products/:id/location/edit' , to: 'locations#edit' ,as: 'edit_location'
-  # patch '/products/location' , to: 'locations#update' ,as: 'update_location'
-
-  #Apply Filter
-
+  resources :profiles , only: [:show , :edit , :update , :destroy]
+  
 
   #admin routes-----------
   get 'ad/index' , to: 'admins#index', as: 'ad_home'
@@ -46,20 +33,42 @@ Rails.application.routes.draw do
 
   # API routes--------------------------------------------
   namespace :api do
-    namespace :v1 do
-      resources :users do
-        resources :products
-      end
+    namespace :v1 do      
+        resources :products              
     end
   end
-  # namespace :api, defaults: { format: 'json' } do
-  #   namespace :v1 do
-  #     resources :products 
-  #   end
-  # end
+  get 'api/v1/my_products' , to: 'api/v1/products#myProducts' , as: 'api_v1_myProducts'
+
 
   use_doorkeeper do
     skip_controllers :authorizations, :applications, :authorized_applications
   end
 
 end
+
+
+
+
+
+# My References---------------------------------------------------
+
+#location routes-----------------
+  # get '/products/:id/location' , to: 'locations#new' , as: 'fill_location'
+  # post '/products/locationadd', to: 'locations#create' ,as: 'add_location'
+  # get '/products/:id/location/edit' , to: 'locations#edit' ,as: 'edit_location'
+  # patch '/products/location' , to: 'locations#update' ,as: 'update_location'
+
+
+
+#payment routes---------------
+  # get '/products/:id/payment' , to: 'payments#new' , as: 'do_payment'
+  # post '/products/payment/:id' , to: 'payments#create' , as: 'create_payment'
+  # get 'products/:id/paymentDetails' , to: 'payments#show' , as: 'view_payment_details'
+  
+
+
+#profile routes----------------
+  # get '/profile/:id' , to: 'profiles#index' , as: 'view_profile'
+  # get '/profile/edit/:id' , to: 'profiles#edit' , as: 'edit_profile'
+  # patch '/profile/update/:id' , to: 'profiles#update', as: 'update_profile' 
+  # delete '/profile/delete/:id' , to: 'profiles#destroy' , as: 'destroy_profile'

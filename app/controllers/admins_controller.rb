@@ -23,10 +23,10 @@ class AdminsController < ApplicationController
   end
 
   def products
-    @products = Product.all
+    @products = Product.includes(:user,:location, [ {:payment => [:user]} ])
   end
   def payments
-    @payments = Payment.all
+    @payments = Payment.includes(:user, [ {:product => [:user]} ]).all
   end
 
   

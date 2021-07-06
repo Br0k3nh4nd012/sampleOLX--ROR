@@ -17,7 +17,7 @@
 <br>
 <div class="myCard">
   <h5><strong>Details of product</strong></h5>
-  <% if @product.user == current_user || current_user.isAdmin  %>
+  <% if @valid  %>
   <%= link_to "update Details" , edit_product_path(@product) , class:"btn btn-success a-btn" %>
   <% end %>
 </div>
@@ -43,7 +43,7 @@
 
 <p style="font-size:20px">
   <strong>Posted By:</strong>
-  <%= link_to @product.user.name , view_profile_path(@product.user) %>
+  <%= link_to @product.user.name , profile_path(@product.user) %>
 </p>
 <p style="font-size:20px">
   <strong>Posted At:</strong>
@@ -52,7 +52,7 @@
 <hr />
 <div class="myCard">
   <h5><strong>Location of Product</strong></h5>
-    <% if @product.user == current_user || current_user.isAdmin %>
+    <% if @valid %>
       <% if @product.location %>
         <%= link_to "update location" ,edit_product_location_path(@product), class:"btn btn-success btnwhite" %>
       <% else %>
@@ -64,19 +64,19 @@
 <% if @product.location %>
   <p style="font-size:20px">
     <strong>City:</strong>
-    <%= @location.city %>
+    <%= @product.location.city %>
   </p>
   <p style="font-size:20px">
     <strong>State:</strong>
-    <%= @location.state %>
+    <%= @product.location.state %>
   </p>
   <p style="font-size:20px">
     <strong>Country:</strong>
-    <%= @location.country %>
+    <%= @product.location.country %>
   </p>
   <p style="font-size:20px">
     <strong>Postal Code:</strong>
-    <%= @location.postalCode %>
+    <%= @product.location.postalCode %>
   </p>
   <% else %>
     <p style="color:red">Location not yet mentioned</p>
