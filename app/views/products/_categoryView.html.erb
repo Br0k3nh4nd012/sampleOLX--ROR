@@ -1,0 +1,23 @@
+<div class="field" style="width:500px">
+        <%= form.label :category , "Realated Categories" %>      
+        <div style="display:flex">
+        <div>
+          <% ["vehicles", "cars", "bikes", "trucks", "auto", "electronics", "TV", "kitchen appliances", "laptops", "mobiles", "tablets", "AC", "computer accessories", "playstation", "books", "gym equipments", "sports equipments", "musical instruments", "furniture", "home appliances", "sofa", "dining", "bed carts", "kids furniture", "other household items", "clocks & watches", "speakers & earphones"].slice(0,9).each_with_index do |categ ,index| %>          
+            <%= form.check_box :category, {multiple: true}, categ , false %>
+            <%= categ %><br>
+          <%end%>
+        </div>
+        <div>
+          <% ["vehicles", "cars", "bikes", "trucks", "auto", "electronics", "TV", "kitchen appliances", "laptops", "mobiles", "tablets", "AC", "computer accessories", "playstation", "books", "gym equipments", "sports equipments", "musical instruments", "furniture", "home appliances", "sofa", "dining", "bed carts", "kids furniture", "other household items", "clocks & watches", "speakers & earphones"].slice(9,9).each_with_index do |categ ,index| %>          
+            <%= form.check_box :category, {multiple: true} , categ , false %>
+            <%= categ %><br>
+          <%end%>
+        </div>
+        <div>
+          <% ["vehicles", "cars", "bikes", "trucks", "auto", "electronics", "TV", "kitchen appliances", "laptops", "mobiles", "tablets", "AC", "computer accessories", "playstation", "books", "gym equipments", "sports equipments", "musical instruments", "furniture", "home appliances", "sofa", "dining", "bed carts", "kids furniture", "other household items", "clocks & watches", "speakers & earphones"].slice(18,9).each_with_index do |categ ,index| %>          
+            <%= form.check_box :category, {multiple: true}, categ , false %>
+            <%= categ %><br>
+          <%end%>
+        </div>
+        </div>
+  </div>  

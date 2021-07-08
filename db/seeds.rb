@@ -27,3 +27,74 @@
 
 # p "created default city state country"
 
+# Category.create!(category:"vehicles")
+# Category.create!(category:"cars")
+# Category.create!(category:"bikes")
+# Category.create!(category:"trucks")
+# Category.create!(category:"auto")
+# Category.create!(category:"electronics")
+# Category.create!(category:"TV")
+# Category.create!(category:"kitchen appliances")
+# Category.create!(category:"laptops")
+# Category.create!(category:"mobiles")
+# Category.create!(category:"tablets")
+# Category.create!(category:"AC")
+# Category.create!(category:"computer accessories")
+# Category.create!(category:"playstation")
+# Category.create!(category:"books")
+# Category.create!(category:"gym equipments")
+# Category.create!(category:"sports equipments")
+# Category.create!(category:"musical instruments")
+# Category.create!(category:"furniture")
+# Category.create!(category:"home appliances")
+# Category.create!(category:"sofa")
+# Category.create!(category:"dining")
+# Category.create!(category:"bed carts")
+# Category.create!(category:"kids furniture")
+# Category.create!(category:"other household items")
+
+# p "categories added success!!"
+
+
+
+Brand.create!(brandName:"samsung")
+Brand.create!(brandName:"rolex")
+Brand.create!(brandName:"apple")
+Brand.create!(brandName:"philips")
+Brand.create!(brandName:"yamaha")
+Brand.create!(brandName:"toyota")
+Brand.create!(brandName:"oneplus")
+Brand.create!(brandName:"audi")
+Brand.create!(brandName:"x-publications")
+Brand.create!(brandName:"whirlpool")
+Brand.create!(brandName:"others")
+
+p "brands added"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

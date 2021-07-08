@@ -13,22 +13,23 @@
   
 
 
-  <div class="field" style="width:30%">
+  <div class="field" style="width:400px">
     <%= form.label :name %>
     <%= form.text_field :name ,  class:"form-control"%>
   </div>
+  <div class="field" style="width:400px">
+      <%= form.label :brand %>
+      <%= form.select :brand, options_for_select(["select..","samsung", "rolex", "apple", "philips", "yamaha", "toyota", "oneplus", "audi", "x-publications", "whirlpool", "others"],()) ,{},{ class:"form-control" } %>
+    </div>
 
-  <div class="field" style="width:30%">
-        <%= form.label :category %>
-        <%= form.select :category, options_for_select(['','mobiles','laptops','home appliances','vehicles','books','sports equipment','electronics','other gadgets','other'],product.category) ,{},{ class:"form-control" } %>
-        </div>  
+  <%= render partial: 'categoryView' , category: @category ,locals: { form: form } %>
 
-  <div class="field" style="width:30%">
+  <div class="field" style="width:400px">
     <%= form.label :description %>
     <%= form.text_area :description ,  class:"form-control"%>
   </div>
 
-  <div class="field" style="width:30%">
+  <div class="field" style="width:400px">
     <%= form.label :price %>
     <%= form.number_field :price ,  class:"form-control" %>
   </div>

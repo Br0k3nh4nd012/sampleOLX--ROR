@@ -27,8 +27,10 @@
 </p>
 
 <p style="font-size:20px">
-  <strong>Category:</strong>
-  <%= @product.category %>
+  <strong>Related Categories:</strong>
+  <% @product.categories.each do |category| %>
+    <%= category.category%>,
+    <% end %>
 </p>
 
 <p style="font-size:20px">
@@ -64,15 +66,15 @@
 <% if @product.location %>
   <p style="font-size:20px">
     <strong>City:</strong>
-    <%= @product.location.city %>
+    <%= @product.location_city %>
   </p>
   <p style="font-size:20px">
     <strong>State:</strong>
-    <%= @product.location.state %>
+    <%= @product.location_state %>
   </p>
   <p style="font-size:20px">
     <strong>Country:</strong>
-    <%= @product.location.country %>
+    <%= @product.location_country %>
   </p>
   <p style="font-size:20px">
     <strong>Postal Code:</strong>

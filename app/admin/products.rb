@@ -8,24 +8,24 @@ ActiveAdmin.register Product do
   permit_params :name, :category, :description, :price, :buyerId, :soldOut, :user_id
   
 index do
-  column :id
+  id_column
   column :name
   column :category
   column :description
   column :price
   column :location do |prod|
-    prod.location.city
+    prod.location.city.cityName
   end
   column :soldOut
   column :user
   column :updated_at
 end
 
-
+preserve_default_filters!
 filter :user 
-filter :location , :collection => proc {(Location.all).map{|l| [l.city, l.id]}}
+filter :location , :collection => proc {(City.all).map{|l| [l.cityName, l.id]}}
 filter :soldOut , as: :check_boxes
-filter :category , as: :select , collection: ['mobiles','laptops','home appliances','vehicles','books','sports equipment','electronics','other gadgets','other']
+# filter :category , as: :select , collection: ['mobiles','laptops','home appliances','vehicles','books','sports equipment','electronics','other gadgets','other']
 filter :price
 filter :name
 

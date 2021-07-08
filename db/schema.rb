@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_134129) do
+ActiveRecord::Schema.define(version: 2021_07_07_135828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,10 +41,34 @@ ActiveRecord::Schema.define(version: 2021_07_06_134129) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "brands", force: :cascade do |t|
+    t.string "brandName"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "category"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "categories_products", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_categories_products_on_category_id"
+    t.index ["product_id"], name: "index_categories_products_on_product_id"
+  end
+
+  create_table "category_products", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_category_products_on_category_id"
+    t.index ["product_id"], name: "index_category_products_on_product_id"
   end
 
   create_table "cities", force: :cascade do |t|
@@ -130,6 +154,8 @@ ActiveRecord::Schema.define(version: 2021_07_06_134129) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "brand_id"
+    t.index ["brand_id"], name: "index_products_on_brand_id"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
@@ -151,10 +177,15 @@ ActiveRecord::Schema.define(version: 2021_07_06_134129) do
     t.string "mobNumber"
     t.text "address"
     t.boolean "isAdmin"
+    t.boolean "isBlocked"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "categories_products", "categories"
+  add_foreign_key "categories_products", "products"
+  add_foreign_key "category_products", "categories"
+  add_foreign_key "category_products", "products"
   add_foreign_key "favourites", "products"
   add_foreign_key "favourites", "users"
   add_foreign_key "locations", "cities"
@@ -163,5 +194,6 @@ ActiveRecord::Schema.define(version: 2021_07_06_134129) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "payments", "products"
   add_foreign_key "payments", "users"
+  add_foreign_key "products", "brands"
   add_foreign_key "products", "users"
 end

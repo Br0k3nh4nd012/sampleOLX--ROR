@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :brand do
+    brandName { "MyString" }
+  end
+
   factory :category do
     category { "MyString" }
   end
@@ -31,9 +35,9 @@ FactoryBot.define do
 
     factory :product do
         name {'product name'}
-        category {'other'}
         description {'rspec'}
         price {200}  
-        user_id {}      
+        user_id {}   
+        brand_id {}   
     end
 end

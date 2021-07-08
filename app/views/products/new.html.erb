@@ -1,8 +1,14 @@
 <div style="margin-left:-15px"><%= link_to 'Back', products_path %></div>
 
 <h1 style="margin-top:6px">New Product</h1>
-
-<%= render 'form', product: @product %>
+<div style="display:flex; justify-content:space-between">
+    <div style="width:80%">
+        <%= render 'form', product: @product %>
+    </div>
+    <div style="padding-right:200px">
+        <%= image_tag "add_prod.svg" , class:"image-lg-x"%>
+    </div>
+</div>
 
 
 

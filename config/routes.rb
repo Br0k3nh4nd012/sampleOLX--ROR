@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   root 'products#index'
 
   resources :products do 
+    collection {post :import}
     resources :locations , only: [:new,:create , :edit , :update]
     resources :payments , only: [:new , :create , :show]
   end
-
   #searchbar routes-------------------
   post '/products/searchedProducts' , to: 'products#searchedProducts' , as: 'searched_products'
   get '/products/searchedProducts' , to: 'products#searchedProducts'

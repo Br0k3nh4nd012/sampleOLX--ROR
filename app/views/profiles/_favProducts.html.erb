@@ -14,9 +14,11 @@
     <% favProducts.each do |product| %>
         <tr>
             <td><%= link_to product.name  , product %></td>
-            <td><%= product.category %></td>
+            <td><% product.categories.each do |category| %>
+              <%= category.category %><br>
+            <% end %></td>
             <%if product.location %>
-              <td><%= product.location.city %>,<%= product.location.state %></td>
+              <td><%= product.location_city %>,<%= product.location_state %></td>
             <%else%>
               <td style="color:red">location not mentioned</td>
             <% end %>

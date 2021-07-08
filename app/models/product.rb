@@ -1,16 +1,28 @@
 class Product < ApplicationRecord
+
+
+
+
   belongs_to :user
   has_one :payment , dependent: :destroy
   has_one :location ,as: :locatable, dependent: :destroy
   # belongs_to :location
   has_many :favourites
   has_many :users , through: :favourites
+  has_and_belongs_to_many :categories , foreign_key: 'product_id' , dependent: :destroy
+  belongs_to :brand
 
 def location_city
   location.city.cityName
 end
 def location_state
   location.state.stateName
+end
+def location_country
+  location.country.countryName
+end
+def brandname
+  brand.brandName
 end
 
 
@@ -22,7 +34,7 @@ end
   attribute :soldOut, :boolean, default: false
 
   #validations-----------------
-  validates :name ,:category, :description, :price ,:user_id ,presence: true
+  validates :name , :description, :price ,:user_id ,presence: true
   validates :price , numericality: { greater_than: 0 }
   # validates :soldOut, exclusion: [nil]
 
