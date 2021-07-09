@@ -20,6 +20,7 @@ index do
   actions
 end
 
+preserve_default_filters!
 filter :user
 filter :paymentMethod , as: :select , collection: ['Net banking','Debit card']
 # filter :price , as: :numeric

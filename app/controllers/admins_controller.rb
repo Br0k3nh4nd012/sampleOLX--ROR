@@ -38,15 +38,6 @@ private
     params.require(:user).permit(:email,:password , :password_confirmation , :name,:mobNumber,:address)
   end
 
-  # def checkLogin
-  #   if current_user
-  #     return true
-  #   else
-  #     flash[:alert] = "Unauthorized access.Login Required."
-  #     redirect_to root_path
-  #   end
-  # end
-
   def checkAdmin
     if current_user.isAdmin
       return true

@@ -1,13 +1,17 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  acts_as_paranoid
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   default_scope { order(created_at: :asc) }
 
-  has_many :products , dependent: :destroy
+  has_many :products , class_name:"Product", dependent: :destroy
   has_many :payments , dependent: :destroy
+  has_many :favourites
+  has_many :favourite_products ,  through: :favourites , source: :product
 
   validates :mobNumber, length: { is: 10 ,message: "Enter a valid Mobile Number" },on: :update
   # validates :mobNumber, format: { with: /\A[0-9]+\z/ message: "only allows digits" }
@@ -26,6 +30,12 @@ class User < ApplicationRecord
     user&.valid_password?(password) ? user : nil
   end
 
+  def active_for_authentication?
+    super && !self.isBlocked
+  end
+  def inactive_message
+    "Sorry, this account is not active."
+  end
 
 
   #callbacks-----------------------

@@ -1,0 +1,34 @@
+<table class="table" style="background-color:azure">
+  <thead class="thead-dark"> 
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Product Location</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% favProducts.each do |product| %>
+        <tr>
+            <td><%= link_to product.name  , product %></td>
+            <td><% product.categories.each do |category| %>
+              <%= category.category %><br>
+            <% end %></td>
+            <%if product.location %>
+              <td><%= product.location_city %>,<%= product.location_state %></td>
+            <%else%>
+              <td style="color:red">location not mentioned</td>
+            <% end %>
+            <td><%= product.description %></td>
+            <td><%= product.price %></td>   
+          
+            <td><%= link_to 'show', product_path(product) , class:"btn-sm btn-success a-btn" %></td>
+            <td><%= link_to 'remove from favourites', remove_favourites_path(product), method: :post, class:"btn-sm btn-danger a-btn"%></td>
+        </tr>
+      
+    <% end %>
+  </tbody>
+</table>

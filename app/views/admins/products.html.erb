@@ -1,14 +1,25 @@
 <div style="margin-left:-15px"><%= link_to 'Back', root_path %></div>
 <div class="myCard">
   <h1>Products </h1>
-  <div style="float:right"><%= link_to 'New Product', new_product_path , class:"btn btn-success a-btn" %></div>
+  <div style="display:flex">
+    <div >
+      <%=link_to "Export to CSV", products_path(format: "csv") , class: "btn btn-info a-btn"%>
+    </div>
+    <div  style="margin-left:20px">
+      <%= form_tag import_products_path, multipart: true do%>
+      <%= file_field_tag :file ,class: "btn btn-info a-btn"%>
+      <%= submit_tag "Import CSV" , class: "btn btn-info a-btn"%>
+      <% end %>
+    </div >
+    <div style="float:right; margin-left:20px;"><%= link_to 'New Product', new_product_path , class:"btn btn-success a-btn" %></div>
+  </div>
 </div>
 <table class="table" style="background-color:azure">
   <thead class="thead-dark"> 
     <tr>
         <th scope="col">Product id</th>
         <th scope="col">Name</th>
-        <th scope="col">Catergory</th>
+        <th scope="col">Related Catergories</th>
         <th scope="col">Product location</th>
         <th scope="col">Description</th>
         <th scope="col">price</th>
@@ -25,9 +36,13 @@
         <tr>
             <td><%= product.id %></td>
             <td><%= link_to product.name  , product %></td>
-            <td><%= product.category %></td>
+            <td>
+            <% product.categories.each do |category| %>
+              <%= category.category %> <br>
+            <% end %>
+            </td>
             <%if product.location%>
-              <td><%= product.location.city %>,<%= product.location.state %></td>
+              <td><%= product.location_city %>,<%= product.location_state %></td>
             <%else%>
               <td style="color:red">location not mentioned</td>            
             <% end %>

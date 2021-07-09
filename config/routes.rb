@@ -7,13 +7,16 @@ Rails.application.routes.draw do
   root 'products#index'
 
   resources :products do 
+    collection {post :import}
     resources :locations , only: [:new,:create , :edit , :update]
     resources :payments , only: [:new , :create , :show]
   end
-
   #searchbar routes-------------------
   post '/products/searchedProducts' , to: 'products#searchedProducts' , as: 'searched_products'
   get '/products/searchedProducts' , to: 'products#searchedProducts'
+
+  post 'product/add_favourite/:id' , to: 'products#addFavourites', as: 'add_favourites'
+  post 'product/remove_favourite/:id'  , to:'products#removeFavourites',as: 'remove_favourites'
 
   #filterBar route--------------------
   post '/' , to: 'products#index' , as: 'apply_filter'
@@ -29,6 +32,10 @@ Rails.application.routes.draw do
   get 'ad/payments', to: 'admins#payments', as: 'ad_payments'
   get 'ad/new_user', to: 'admins#newUser', as: 'ad_new_user'
   post 'ad/create_user' , to: 'admins#createUser', as: 'ad_create_user'
+
+
+
+
 
 
   # API routes--------------------------------------------

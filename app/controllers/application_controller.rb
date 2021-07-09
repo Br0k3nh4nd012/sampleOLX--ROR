@@ -13,9 +13,9 @@ class ApplicationController < ActionController::Base
 
     def validUser
       begin 
-        if current_user == Product.find(params[:id]).user || current_user.isAdmin        
+        if (current_user == Product.find(params[:id]).user || current_user.isAdmin)  && !current_user.isBlocked    
           return true
-        else        
+        else      
           return false
         end
       rescue ActiveRecord::RecordNotFound => e

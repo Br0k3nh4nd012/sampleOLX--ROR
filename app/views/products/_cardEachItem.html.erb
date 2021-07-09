@@ -5,10 +5,15 @@
           <div>
             <h5 class="card-title"><strong><%=product.name%></strong></h5>
             <h6 class="card-text"><strong>id: </strong> <%=product.id%></h6>
-            <h6 class="card-text"><strong>category: </strong> <%=product.category%></h6>
+            <h6 class="card-text"><strong>Brand: </strong> <%=product.brandname%></h6>
+            <h6 class="card-text"><strong>Related categories: </strong>
+            <% product.categories.each do |category| %>
+              <%= category.category %>
+            <% end %>
+            </h6>
             <h6 class="card-text"><strong>Price: </strong> <%=product.price%></h6>
             <%if product.location%>
-                <h6 class="card-text"><strong>Location: </strong> <%=product.location.city%></h6>
+                <h6 class="card-text"><strong>Location: </strong> <%=product.location_city%>,<%=product.location_state%></h6>
               <%else%>
                 <%= %>              
               <% end %>
@@ -17,6 +22,13 @@
             <%= link_to 'show more' , product ,class:"btn btn-info a-btn" %>
           </div>
           <div>
+          <div class="icon">
+          <% if product.favProduct(current_user) %>
+            <%= link_to icon('fas', 'heart') ,remove_favourites_path(product) ,:method => :post, class: "icon-heart-fav"%>
+          <%else%>
+            <%= link_to icon('fas', 'heart') ,add_favourites_path(product) ,:method => :post, class: "icon-heart-notfav"%>
+          <% end %>
+          </div>
           <%= image_tag "for_sale.jpg" , class:"image"%>
           </div>
         </div>

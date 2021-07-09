@@ -1,7 +1,31 @@
 class Product < ApplicationRecord
+
+
+
+
   belongs_to :user
   has_one :payment , dependent: :destroy
   has_one :location ,as: :locatable, dependent: :destroy
+  # belongs_to :location
+  has_many :favourites
+  has_many :users , through: :favourites
+  has_and_belongs_to_many :categories , foreign_key: 'product_id' , dependent: :destroy
+  belongs_to :brand
+
+def location_city
+  location.city.cityName
+end
+def location_state
+  location.state.stateName
+end
+def location_country
+  location.country.countryName
+end
+def brandname
+  brand.brandName
+end
+
+
   #scopes--------------
   # default_scope { order(created_at: :asc) }
   scope :other_products , ->(current_user) { where("user_id != ?" , current_user.id)}
@@ -10,41 +34,18 @@ class Product < ApplicationRecord
   attribute :soldOut, :boolean, default: false
 
   #validations-----------------
-  validates :name ,:category, :description, :price ,:user_id ,presence: true
+  validates :name , :description, :price ,:user_id ,presence: true
   validates :price , numericality: { greater_than: 0 }
-  # validates :soldOut, exclusion: [nil]
+  
 
-
-  #callbacks-----------------
-  # before_create :setSoldOut
-  # def setSoldOut
-  #   self.soldOut = false
-  # end
-
-  after_update do
-    # if self.soldOut 
-    #   !self.buyerId.nil? 
-    # end
+  after_update do    
     validates_presence_of :buyerId if self.soldOut?
-    # self.buyerId.present?  if self.soldOut?
-    # self.errors.add(:buyerId , "buyer Id cannot be nil!!")
   end
-  # before_update :checkUser
-  
-  # before_destroy :checkUser
-  # def checkUser
-  #   if self.user.isAdmin || self.user == User.current
-  #     return true
-  #   else
-  #     return false
-  #   end
-  # end
 
-  
-  # validates :category , presence: true
-  # validates :description , presence: true
-  # validates :price , presence: true
-  
+def favProduct(user)
+  self.users.include? user
 end
 
-# validate_presence_of :validate_units_array, :unless => Proc.new { |p| p.record_attribute_changed?("status", "before") && discarded?}
+end
+
+

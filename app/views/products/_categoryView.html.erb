@@ -1,0 +1,23 @@
+<div class="field" style="width:500px">
+        <%= form.label :category , "Realated Categories" %>      
+        <div style="display:flex">
+        <div>
+          <% Category.categories.slice(0,9).each_with_index do |categ ,index| %>          
+            <%= form.check_box :category, {multiple: true}, categ , false %>
+            <%= categ %><br>
+          <%end%>
+        </div>
+        <div>
+          <% ["electronics", "furniture", "gym equipments", "home appliances", "kids furniture", "kitchen appliances", "laptops", "mobiles", "musical instruments"].each_with_index do |categ ,index| %>          
+            <%= form.check_box :category, {multiple: true} , categ , false %>
+            <%= categ %><br>
+          <%end%>
+        </div>
+        <div>
+          <% ["other household items", "playstation", "sofa", "speakers & earphones", "sports equipments", "tablets", "trucks", "TV", "vehicles","others"].each_with_index do |categ ,index| %>          
+            <%= form.check_box :category, {multiple: true}, categ , false %>
+            <%= categ %><br>
+          <%end%>
+        </div>
+        </div>
+  </div>  

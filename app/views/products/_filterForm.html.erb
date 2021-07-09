@@ -3,18 +3,25 @@
 <%= form_with(url: apply_filter_path)  do |form| %>
     <div class="filterBar">
         <div style="margin-right:20px">
-        <div class="field" style="width:400px">
-        <%= form.label :category %>
-        <%= form.select :category, options_for_select(['All categories','mobiles','laptops','home appliances','vehicles','books','sports equipment','electronics','other gadgets','other'], params[:category]) ,{},{ class:"form-control" } %>
+          <div class="field" style="width:300px">
+            <%= form.label :category %>
+            <%= form.select :category, options_for_select(["All categories"]+Category.categories, params[:category]) ,{},{ class:"form-control" } %>
+          </div>  
         </div>  
-        </div>  
-        <div style="margin-right:20px">
 
-        <div class="field" style="width:400px">
-        <%= form.label :location %>
-        <%= form.select :location, options_for_select(['All Location(city)','chennai','coimbatore','trichy','madurai','kochi','karur'],params[:location]) ,{},{ class:"form-control" } %>
+        <div style="margin-right:20px">
+          <div class="field" style="width:300px">
+            <%= form.label :location %>
+            <%= form.select :location, options_for_select(['All Location(city)','chennai','coimbatore','trichy','madurai','kochi','karur'],params[:location]) ,{},{ class:"form-control" } %>
+          </div> 
         </div>  
-        </div>   
+
+        <div style="margin-right:20px">
+          <div class="field" style="width:300px">
+            <%= form.label :brand %>
+            <%= form.select :brand, options_for_select(['All Brands']+Brand.pluck(:brandName),params[:brand]) ,{},{ class:"form-control" } %>
+          </div> 
+        </div> 
         <div >
             <%= form.submit "Apply Filter" , class:"btn btn-success"%>
         </div>

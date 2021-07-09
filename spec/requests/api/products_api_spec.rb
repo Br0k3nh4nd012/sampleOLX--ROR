@@ -7,7 +7,8 @@ RSpec.describe 'Api::V1::ProductsController', type: :request do
     let(:authorization) { "Bearer #{access_token.token}" }
     before do
         @user = create(:user)
-        @product = create(:product , user_id: @user.id)
+        @brand = create(:brand)
+        @product = create(:product , user_id: @user.id , brand_id: @brand.id)
     end
     
     let(:prod1) do 
@@ -19,8 +20,8 @@ RSpec.describe 'Api::V1::ProductsController', type: :request do
     
     context 'GET #myProducts' do
         it 'returns products successfully' do
-            get '/api/v1/my_products', headers: { Authorization: authorization }
-            expect(response).to be_successful
+            get '/api/v1/my_products', headers: { Authorization: authorization } 
+            expect(response.body).to include(@product.to_json)
         end
     end
 
@@ -35,6 +36,8 @@ RSpec.describe 'Api::V1::ProductsController', type: :request do
         it 'returns product successfully' do
             get api_v1_product_path(@product) , headers: { Authorization: authorization }
             expect(response).to be_successful
+            expect(response.body).to include(@product.to_json)
+
         end
     end
 

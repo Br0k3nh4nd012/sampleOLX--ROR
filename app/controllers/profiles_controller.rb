@@ -7,6 +7,7 @@ class ProfilesController < ApplicationController
     @user = User.find(params[:id])
     @myProducts = @user.products.includes(:location)
     @purchasedProduct = Product.includes(:payment).where(buyerId: @user.id).order(updated_at: :asc)
+    @favProducts = @user.favourite_products
   end
   
   # get '/profile/edit/:id' , to: 'profiles#edit' , as: 'edit_profile'
@@ -30,9 +31,13 @@ class ProfilesController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    if @user.destroy
-      flash[:notice] = "User destroyed Successfully!!"
-      redirect_to ad_users_path
+    respond_to do |format|
+      if @user.destroy
+        flash[:notice] = "User destroyed Successfully!!"
+        format.html { redirect_to ad_users_path }
+      else
+        format.html { render :show , status: :unprocessable_entity}
+      end
     end
   end
 
@@ -41,22 +46,13 @@ class ProfilesController < ApplicationController
       params.require(:user).permit(:name , :email,:mobNumber ,:address)
     end
 
-    #check for is logged in
-    # def checkLogin
-    #   if user_signed_in?
-    #     return true
-    #   else
-    #     flash[:alert] = "Unauthorized access.Login Required."
-    #     redirect_to root_path
-    #   end
-    # end
 
     def checkUser
       if current_user.isAdmin or current_user == User.find(params[:id])
         return true
       else
         flash[:alert] = "Unauthorized access."
-        redirect_to view_profile_path(current_user)
+        redirect_to profile_path(current_user)
       end
     end
 end

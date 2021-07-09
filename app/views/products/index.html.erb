@@ -7,11 +7,14 @@
   <%= render 'filterForm' %>
   <div style="float:right"><%= link_to 'New Product', new_product_path , class:"btn btn-success a-btn"%></div>
 
+
+ 
+
   <% if !@products.blank? %>
   <%= render 'cardEachItem' , products: @products %>
 <% else %>
 <div class="emptyItems">
-  <%= image_tag "new_empty.png" , class:"image-lg"%>
+  <%= image_tag "empty_1.svg" , class:"image-lg"%>
   <h3 style="margin-top:20px; color:red">Nothing Found!!</h3>
 </div>
 <% end %>

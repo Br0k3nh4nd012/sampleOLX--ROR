@@ -1,4 +1,35 @@
 FactoryBot.define do
+  factory :brand do
+    brandName { "MyString" }
+  end
+
+  factory :category do
+    category { "MyString" }
+  end
+
+  factory :country do
+    countryName { "MyString" }
+  end
+
+  factory :state do
+    stateName { "MyString" }
+  end
+
+  factory :city do
+    cityName { "MyString" }
+  end
+
+  factory :favourite do
+    user { nil }
+    product { nil }
+  end
+  factory :location do 
+    city_id {}
+    state_id {}
+    country_id {}
+    postalCode { 603423 }
+  end
+
     factory :user do
         email { 'gok@gmail.com' }
         password { 'password' }
@@ -10,9 +41,9 @@ FactoryBot.define do
 
     factory :product do
         name {'product name'}
-        category {'other'}
         description {'rspec'}
         price {200}  
-        user_id {}      
+        user_id {}   
+        brand_id {}   
     end
 end

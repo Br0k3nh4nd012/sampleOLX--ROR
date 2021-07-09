@@ -2,16 +2,14 @@ class LocationsController < ApplicationController
   
   before_action :authenticate_user!
 
-
-  def index
-  end
   def new
-    @location = Location.new
-    @productId = params[:product_id]
-    # @locerrors = @location.errors
+    @location = Location.new    
   end
   def create
-    @location = Product.find(params[:product_id]).build_location(location_params)
+    @location = Product.find(params[:product_id]).build_location(postalCode: location_params[:postalCode])
+    @location.city = City.find_city(location_params[:city])
+    @location.state = State.find_state(location_params[:state])
+    @location.country = Country.find_country(location_params[:country])
       if @location.save
         flash[:notice] = "Location updated Successfully!!"
         redirect_to root_path 
@@ -24,10 +22,15 @@ class LocationsController < ApplicationController
 
   def edit
     @location = Product.find(params[:product_id]).location
+
   end
   def update
     @location = Product.find(params[:product_id]).location
-    if @location.update(location_params)
+    @location.city = City.find_city(location_params[:city])
+    @location.state = State.find_state(location_params[:state])
+    @location.country = Country.find_country(location_params[:country])
+    @location.postalCode = location_params[:postalCode]
+    if @location.save
       flash[:notice] = "Location Updated Successfully.!!"
       redirect_to @location.locatable
     else
@@ -41,12 +44,4 @@ private
     params.require(:location).permit(:city, :state, :country, :postalCode)
   end
 
-  # def checkLogin
-  #   if current_user
-  #     return true
-  #   else
-  #     flash[:alert] = "Unauthorized access.Login Required."
-  #     redirect_to root_path
-  #   end
-  # end
 end

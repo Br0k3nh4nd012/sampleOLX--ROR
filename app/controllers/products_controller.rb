@@ -1,33 +1,54 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
-  before_action :checkUser, only: %i[ edit update destroy ]
-  before_action :validProfile , only: [:new , :create]
+  before_action :authenticate_user! 
+  before_action :checkUser, only: [ :edit, :update, :destroy ]
+  # before_action :validProfile , only: [:new , :create]
+
+
+
 
   # GET /products or /products.json
   def index    
-    if current_user.isAdmin 
-      redirect_to ad_home_path
+    
+    if current_user.isAdmin       
+      respond_to do |format|
+        format.html { redirect_to ad_home_path  }
+        format.csv { send_data ImportExportCSV.new.to_csv , filename: "products-#{Date.today}.csv" }
+    end  
+      
     else
       if params[:category] && params[:category] != 'All categories'
-        @products = Product.includes(:location).other_products(current_user).where(category: params[:category] , soldOut:false)
+        @category = Category.find_by(category: params[:category])
+        @products = @category.products.other_products(current_user).where(soldOut:false)
       else
-        @products = Product.includes(:location).other_products(current_user).where(soldOut: false)
+      @products = Product.includes(:location ,:brand,:categories_products,:categories).other_products(current_user).where(soldOut: false)
+      end
+
+      if params[:brand] && params[:brand] != 'All Brands'
+        @products =  @products.where(brand_id: Brand.find_by(brandName: params[:brand]))
       end
 
       if params[:location]
         @locproducts = []
           if params[:location] != 'All Location(city)'
             @products.each do |prod| 
-              if prod.location.city == params[:location] 
+              if prod.location_city == params[:location] 
                 @locproducts.push(prod)
               end
             end
             @products = @locproducts
           end
-      end
-    end
+      end      
+    end  
+    
   end
+
+
+  def import
+    ImportExportCSV.new.import(params[:file])
+    redirect_to ad_products_url, notice: "Products Uploaded successfully"
+   end
+
 
   # GET /products/searchedProducts
   def searchedProducts
@@ -37,6 +58,30 @@ class ProductsController < ApplicationController
   end
 
 
+  #POST /product/favourite/:id
+  def addFavourites
+    favourite = current_user.favourites.new(product_id:params[:id])
+    respond_to do |format|
+      if favourite.save        
+        format.html { redirect_to root_path }
+      else
+        flash[:alert] = "favourite not added!!"
+        format.html { redirect_to root_path , status: :unprocessable_entity}
+      end
+    end
+  end
+  # POST /product/favourite/:id
+  def removeFavourites
+    favourite = current_user.favourites.find_by(product_id:params[:id])
+    respond_to do |format|
+      if favourite.destroy        
+        format.html { redirect_to root_path }
+      else
+        flash[:alert] = "favourite not removed!!"
+        format.html { redirect_to root_path , status: :unprocessable_entity}
+      end
+    end
+  end
 
 
   # GET /products/1 or /products/1.json
@@ -59,19 +104,17 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
     @user = Product.find(params[:id]).user
-
   end
 
   # POST /products or /products.json
   def create
-    @user = current_user
-    @product = @user.products.new(product_params)
-
+    @product = current_user.products.new(name: product_params[:name],description:product_params[:description],price:product_params[:price])
+    @product.brand = Brand.find_by(brandName: product_params[:brand])
+    @product.categories = Category.where(category:product_params[:category])
     respond_to do |format|
       if @product.save 
-        # format.json { render json: "Product was successfully created.", status: :created, location: @product }
-        format.html { redirect_to new_product_location_path(@product), notice: "Product was successfully created." }
-        # format.json { render json: { success: true }}
+        format.html { redirect_to new_product_location_path(@product), notice: "Product was successfully created."}
+        format.json { render json: @product}
         
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -82,8 +125,11 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1 or /products/1.json
   def update
+    @categories = Category.where(category:product_params[:category])
+    @product.categories = @categories
+    @product.brand = Brand.find_by(brandName: product_params[:brand])
     respond_to do |format|
-      if @product.update(product_params)
+      if @product.update(name: product_params[:name],description:product_params[:description],price:product_params[:price])
         if current_user.isAdmin
           format.html { redirect_to admin_products_path, notice: "Product was successfully updated." }
         else
@@ -99,6 +145,7 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
+    @product.categories.delete_all
     @product.destroy
     respond_to do |format|
       if !current_user.isAdmin
@@ -120,12 +167,16 @@ class ProductsController < ApplicationController
       end
     end
 
+    # def checklock
+    #   current_user.lock_access!
+    #   redirect_to new_user_session_path
+    # end
 
     def checkUser
       if validUser
         return true
       else
-        flash[:alert] = "Unauthorized access."
+        flash[:alert] = "Unauthorized Access!!"
         redirect_to profile_path(current_user)
       end
     end 
@@ -134,15 +185,19 @@ class ProductsController < ApplicationController
       if current_user.name.blank? || current_user.mobNumber.blank? || current_user.address.blank?
         flash[:alert] = "Invalid profile.Please Update your profile !!"
         redirect_to profile_path(current_user)
+        return false
       else
         return true
       end
     end
 
-    
+    # def categories
+    #   Category.pluck(:category)
+    # end
+
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :category, :description, :price)
+      params.require(:product).permit(:name, {category:[] }  ,:brand ,:description, :price)
     end
     
 end

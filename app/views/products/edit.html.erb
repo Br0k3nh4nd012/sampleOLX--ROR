@@ -1,8 +1,12 @@
-<h1>Editing Product</h1>
+<div style="margin-left:-15px"><%= link_to 'Back', products_path %></div>
 
 
-    <%= render 'form', product: @product %>
-
-
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+    <h1 style="margin-top:6px">Edit Product</h1>
+    <div style="display:flex; justify-content:space-between">
+        <div style="width:80%">
+            <%= render 'form', product: @product %>
+        </div>
+        <div style="padding-right:200px">
+            <%= image_tag "update_prod.svg" , class:"image-lg-x"%>
+        </div>
+    </div>
