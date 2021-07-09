@@ -11,16 +11,16 @@
   
     <div class="field" style="width:30%">
       <%= form.label :city %>
-      <%= form.select :city, options_for_select(["select..","chennai", "coimbatore", "trichy", "madurai", "kochi", "karur"],@location.city) ,{},{ class:"form-control" } %>
+      <%= form.select :city, options_for_select(["select..","chennai", "coimbatore", "trichy", "madurai", "kochi", "karur"],params[:city]) ,{},{ class:"form-control" } %>
     </div>
     
     <div class="field" style="width:30%">
       <%= form.label :state %>
-      <%= form.select :state, options_for_select(["select..","tamilnadu", "kerala", "karnataka"],@location.state) ,{},{ class:"form-control" } %>
+      <%= form.select :state, options_for_select(["select..","tamilnadu", "kerala", "karnataka"],params[:state]) ,{},{ class:"form-control" } %>
     </div>
     <div class="field" style="width:30%">
       <%= form.label :country %>
-      <%= form.select :country, options_for_select(["select..","india", "srilanka"],@location.country) ,{},{ class:"form-control" } %>
+      <%= form.select :country, options_for_select(["select..","india", "srilanka"],params[:country]) ,{},{ class:"form-control" } %>
     </div>
     <div class="field" style="width:30%">
       <%= form.label :postalCode %>

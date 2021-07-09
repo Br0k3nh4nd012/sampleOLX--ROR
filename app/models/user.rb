@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  acts_as_paranoid
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -28,6 +30,12 @@ class User < ApplicationRecord
     user&.valid_password?(password) ? user : nil
   end
 
+  def active_for_authentication?
+    super && !self.isBlocked
+  end
+  def inactive_message
+    "Sorry, this account is not active."
+  end
 
 
   #callbacks-----------------------

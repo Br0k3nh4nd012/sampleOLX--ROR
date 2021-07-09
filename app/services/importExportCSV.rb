@@ -16,15 +16,16 @@ class ImportExportCSV
       end
 
 
+      
       def import(file)
         CSV.foreach(file.path, headers: true) do |row|
           product_hash = row.to_hash
-          @prod = Product.create!(name:product_hash['name'], description: product_hash['description'], price: product_hash['price'], user_id:2 , brand_id: 2)
-          @loc = @prod.build_location(postalCode: product_hash['postalCode'])
-          @loc.city = City.find_by(cityName:product_hash['city'])
-          @loc.state = State.find_by(stateName:product_hash['state'])
-          @loc.country = Country.find_by(countryName:product_hash['country'])
-          @loc.save
+          prod = Product.create!(name:product_hash['name'], description: product_hash['description'], price: product_hash['price'], user_id:2 , brand_id: 2)
+          loc = prod.build_location(postalCode: product_hash['postalCode'])
+          loc.city = City.find_by(cityName:product_hash['city'])
+          loc.state = State.find_by(stateName:product_hash['state'])
+          loc.country = Country.find_by(countryName:product_hash['country'])
+          loc.save
           
        end
       end

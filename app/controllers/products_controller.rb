@@ -38,11 +38,9 @@ class ProductsController < ApplicationController
             end
             @products = @locproducts
           end
-      end
-
-      
+      end      
     end  
-    @category = categories  
+    
   end
 
 
@@ -62,10 +60,9 @@ class ProductsController < ApplicationController
 
   #POST /product/favourite/:id
   def addFavourites
-    @favourite = current_user.favourites.new(product_id:params[:id])
+    favourite = current_user.favourites.new(product_id:params[:id])
     respond_to do |format|
-      if @favourite.save
-        flash[:notice] = "favourite added!!"
+      if favourite.save        
         format.html { redirect_to root_path }
       else
         flash[:alert] = "favourite not added!!"
@@ -75,10 +72,9 @@ class ProductsController < ApplicationController
   end
   # POST /product/favourite/:id
   def removeFavourites
-    @favourite = current_user.favourites.find_by(product_id:params[:id])
+    favourite = current_user.favourites.find_by(product_id:params[:id])
     respond_to do |format|
-      if @favourite.destroy
-        flash[:notice] = "favourite removed"
+      if favourite.destroy        
         format.html { redirect_to root_path }
       else
         flash[:alert] = "favourite not removed!!"
@@ -103,23 +99,22 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
-    @category = categories
   end
 
   # GET /products/1/edit
   def edit
     @user = Product.find(params[:id]).user
-    @category = categories
   end
 
   # POST /products or /products.json
   def create
-    product = current_user.products.new(name: product_params[:name],description:product_params[:description],price:product_params[:price])
-    product.brand = Brand.find_by(brandName: product_params[:brand])
-    product.categories = Category.where(category:product_params[:category])
+    @product = current_user.products.new(name: product_params[:name],description:product_params[:description],price:product_params[:price])
+    @product.brand = Brand.find_by(brandName: product_params[:brand])
+    @product.categories = Category.where(category:product_params[:category])
     respond_to do |format|
-      if product.save 
-        format.html { redirect_to new_product_location_path(product), notice: "Product was successfully created."}
+      if @product.save 
+        format.html { redirect_to new_product_location_path(@product), notice: "Product was successfully created."}
+        format.json { render json: @product}
         
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -130,7 +125,6 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1 or /products/1.json
   def update
-    @category = categories
     @categories = Category.where(category:product_params[:category])
     @product.categories = @categories
     @product.brand = Brand.find_by(brandName: product_params[:brand])
@@ -197,9 +191,9 @@ class ProductsController < ApplicationController
       end
     end
 
-    def categories
-      ["vehicles", "cars", "bikes", "trucks", "auto", "electronics", "TV", "kitchen appliances", "laptops", "mobiles", "tablets", "AC", "computer accessories", "playstation", "books", "gym equipments", "sports equipments", "musical instruments", "furniture", "home appliances", "sofa", "dining", "bed carts", "kids furniture", "other household items", "clocks & watches", "speakers & earphones"]
-    end
+    # def categories
+    #   Category.pluck(:category)
+    # end
 
     # Only allow a list of trusted parameters through.
     def product_params

@@ -55,7 +55,7 @@ RSpec.describe 'ProductsController', type: :request do
     context 'GET #edit' do
         it 'renders edit page success' do
             sign_in @user
-            # allow(controller).to receive(:checkUser) {true}
+            # allow(controller).to receive(:categories) {Category.pluck(:category)}
             prod = create(:product , user_id: @user.id , brand_id: @brand.id)
             get edit_product_path(prod)
             expect(response.status).to eq(200)
@@ -116,9 +116,9 @@ RSpec.describe 'ProductsController', type: :request do
         it 'creates a product successfully' do
             sign_in @user   
             
-            post products_path , params: { product: {name:"test" , description:"TEst", brand: @brand.brandName ,category: @category, price:234 } }
+            post products_path , params: { product: {name:"test" , description:"TEst", brand: @brand.brandName ,category: @category, price:234 } } 
             expect(response).to redirect_to(new_product_location_path(Product.last))
-            # expect(response).to redirect_to()
+            # expect(response.body.to_json).to eq("fsfrgvfdv")
         end
     end
 end

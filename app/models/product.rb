@@ -36,22 +36,10 @@ end
   #validations-----------------
   validates :name , :description, :price ,:user_id ,presence: true
   validates :price , numericality: { greater_than: 0 }
-  # validates :soldOut, exclusion: [nil]
+  
 
-
-  #callbacks-----------------
-  # before_create :setSoldOut
-  # def setSoldOut
-  #   self.soldOut = false
-  # end
-
-  after_update do
-    # if self.soldOut 
-    #   !self.buyerId.nil? 
-    # end
+  after_update do    
     validates_presence_of :buyerId if self.soldOut?
-    # self.buyerId.present?  if self.soldOut?
-    # self.errors.add(:buyerId , "buyer Id cannot be nil!!")
   end
 
 def favProduct(user)
@@ -60,4 +48,4 @@ end
 
 end
 
-# validate_presence_of :validate_units_array, :unless => Proc.new { |p| p.record_attribute_changed?("status", "before") && discarded?}
+

@@ -23,6 +23,12 @@ FactoryBot.define do
     user { nil }
     product { nil }
   end
+  factory :location do 
+    city_id {}
+    state_id {}
+    country_id {}
+    postalCode { 603423 }
+  end
 
     factory :user do
         email { 'gok@gmail.com' }
